@@ -1,0 +1,68 @@
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<form class="form-horizontal">
+    <uib-tabset>
+        <!-- Manage Booking Tab -->
+        <uib-tab select="selectTab('manage-booking')"
+                 id="manage-booking"
+                 active="tabs['manage-booking'].active">
+            <uib-tab-heading>{{tabs['manage-booking'].heading}}</uib-tab-heading>
+            <ng-include id="tab-content-manage-booking"
+                        src="'./app/book/manage-booking/manageBooking.html'"
+                        onload="manageBookingTabTemplateLoaded()"></ng-include>            
+        </uib-tab>
+        <!-- Technical Specifications Tab -->
+        <uib-tab select="selectTab('technical-specifications')"
+                 id="technical-specifications"
+                 active="tabs['technical-specifications'].active">
+            <uib-tab-heading>{{tabs['technical-specifications'].heading}}</uib-tab-heading>
+            <ng-include id="tab-content-technical-specifications"
+                        src="'./app/book/technical-specifications/technicalSpecifications.html'"
+                        ng-controller="TechnicalSpecificationsCtrl as vm"></ng-include>
+        </uib-tab>
+        <!-- Event Log Tab -->
+        <uib-tab select="selectTab('event-log')"
+                 id="event-log"
+                 active="tabs['event-log'].active">
+            <uib-tab-heading>Event Log</uib-tab-heading>
+            <ng-include id="tab-content-event-log"
+                        src="'./app/book/event-logs/eventLogs.html'"
+                        ng-controller="EventLogsCtrl as eventLogs"></ng-include>
+        </uib-tab>
+        <!-- Personnel Tab -->
+        <uib-tab select="selectTab('personnel')"
+                 id="personnel"
+                 active="tabs['personnel'].active">
+            <uib-tab-heading>Personnel</uib-tab-heading>
+            <ng-include id="tab-content-personnel"
+                        src="'./app/book/personnel/personnel.html'"
+                        ng-controller="personnelCtrl as vm"></ng-include>
+        </uib-tab>
+        <!-- Billing Tab -->
+        <uib-tab select="selectTab('billing')"
+                 id="billing"
+                 active="tabs['billing'].active">
+            <uib-tab-heading>Billing</uib-tab-heading>
+            <ng-include id="tab-content-billing"
+                        src="'./app/book/billing/billing.html'"
+                        ng-controller="BillingCtrl as vm"></ng-include>
+        </uib-tab>
+        <!-- Profile Tab -->
+        <uib-tab>
+            <uib-tab-heading>
+                <img ng-src="{{profilePhoto}}" class="img-sm img-circle"/>
+            </uib-tab-heading>
+            <a ng-href="{{profileUrl}}" target="_blank">View profile</a>
+        </uib-tab>
+    </uib-tabset>
+
+    <div class='row modal-buttons-container'>
+        <div class="col-sm-12">
+            <a class="btn btn-link pull-right" data-dismiss="modal">Close</a>
+            <button ng-class="{'disabled': submitting}" ng-hide="isAddNew" ng-click="openRemoveBookingModal(event_info)" type="button" class="btn btn-danger btn-embossed pull-right remove-button">Remove</button>
+            <button ng-class="{'disabled': submitting}" type="submit" class="btn btn-blue btn-embossed pull-right submit-button ladda-button" data-style="slide-left">
+                <span ng-show="isAddNew" class="ladda-label">Submit</span>
+                <span ng-hide="isAddNew" class="ladda-label">Update</span>
+            </button>
+        </div>
+    </div>
+</form>

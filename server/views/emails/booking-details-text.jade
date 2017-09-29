@@ -1,0 +1,28 @@
+- var ts = booking.technical_specifications || {}
+- var director = ts.local_or_remote_actor_and_director
+
+| Production: #{booking.production} 
+if booking.episode_number
+    | Episode Number: #{booking.episode_number}
+| #{eol}
+
+if booking.estimate
+    | - Estimate: #{booking.estimate} #{eol}
+
+if booking.actors.length
+    | - Actors:#{eol}
+    each actor in booking.actors
+        | * Name: #{actor.name}, Time: #{actor.start_time} #{eol}
+if booking.additional_infomation
+    | - Additional Infomation: #{booking.additional_infomation} #{eol}
+
+if (director == 'local_actor_director')
+    | Local Actor Director #{eol}
+else if ( director == 'local_director_with_remote_actor')
+    | Local Actor with Remote Director #{eol}
+    each client in ts.clients
+        | * #{client.title} #{eol}
+else if (director == 'local_actor_with_remote_director')
+    | Local Actor Director #{eol}
+    each client in ts.clients
+        | * #{client.title} #{eol}

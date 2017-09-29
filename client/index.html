@@ -1,0 +1,108 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="description" content="Booking App">
+        <meta name="author" content="trexanhlab">
+        
+        <!--<link rel="shortcut icon" href="./theme_components/assets/global/images/favicon.png" type="image/png">-->
+        <title>Booking Studio App</title>
+        
+        <!-- This file contains relative links to css from other folders. -->
+        <!-- Therefore, it needs to be excluded from gulp's build process -->
+        <link href="./theme_components/assets/global/css/style.css" rel="stylesheet">
+        
+        <!-- build:css styles.min.css -->
+        <link href="./theme_components/assets/global/css/theme.css" rel="stylesheet">
+        <link href="./theme_components/assets/global/css/ui.css" rel="stylesheet">
+        <link href="./bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+        <link href="./bower_components/ladda/dist/ladda.min.css" rel="stylesheet" />
+        <link href="./bower_components/intro.js/minified/introjs.min.css" rel="stylesheet" />
+        <link href="./bower_components/font-awesome-animation/dist/font-awesome-animation.min.css" rel="stylesheet" />
+        <link href="./bower_components/animate.css/animate.min.css" rel="stylesheet" />
+        <!-- BEGIN ANGULARJS STYLE -->
+        <link href="./theme_components/css/angular-theme.css" rel="stylesheet">
+        <!-- END ANGULARJS STYLE -->
+        <!-- BEGIN LAYOUT STYLE -->
+        <link href="./theme_components/assets/admin/layout2/css/layout.css" rel="stylesheet">
+        <!-- END LAYOUT STYLE -->
+        <link href="./app/css/style.css" rel="stylesheet">
+        <!-- endbuild -->
+        
+        <script src="./theme_components/assets/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+       
+    </head>
+    <body ng-app="newApp" class="{{$state.current.data.bodyClass}}" ng-controller="mainCtrl">
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <!-- BEGIN PAGE SPINNER -->
+        <div ng-spinner-loader class="page-spinner-loader">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+        <div ui-view></div>
+        <!-- BEGIN PRELOADER -->
+        <div class="loader-overlay">
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+        <!-- build:js scripts.min.js -->
+        <!-- BEGIN ANGULARJS SCRIPTS -->
+        <script src="./bower_components/angular/angular.js"></script>
+        <script src="./bower_components/json3/lib/json3.js"></script>
+        <script src="./bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="./bower_components/angular-resource/angular-resource.js"></script>
+        <script src="./bower_components/angular-permission/dist/angular-permission.js"></script>
+        <script src="./bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="./bower_components/ocLazyLoad/dist/ocLazyLoad.min.js"></script>
+        <script src="./bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="./bower_components/angular-animate/angular-animate.js"></script>
+        <script src="./bower_components/angular-touch/angular-touch.js"></script>
+        <script src="./bower_components/angular-route/angular-route.js"></script>
+        <script src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+        <script src="./tour.js"></script>
+        <script src="app-config.js"></script>
+        <script src="app.js"></script>
+        <script src="./app/routes.js"></script>
+        <script src="./app/services.js"></script>
+        
+        <script src="./theme_components/directives/ngViewClass.js"></script>
+        <!-- END ANGULARJS SCRIPTS -->
+        <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="./bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <script src="./bower_components/lodash/lodash.min.js"></script>
+        <script src="./theme_components/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="./theme_components/assets/global/plugins/jquery-cookies/jquery.cookies.min.js"></script>
+        <script src="./theme_components/assets/global/js/sidebar_hover.js"></script>
+        <script src="./bower_components/moment/min/moment.min.js"></script>
+        <script src="./bower_components/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
+        <script src="./bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <!-- <script src="./bower_components/fullcalendar-mobile/src/_loader.js"></script> -->
+        <script src="./bower_components/ladda/dist/spin.min.js"></script>
+        <script src="./bower_components/ladda/dist/ladda.min.js"></script>
+        <script src="./bower_components/intro.js/minified/intro.min.js"></script>
+        <script src="./bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="./theme_components/assets/global/plugins/timepicker/jquery-ui-timepicker-addon.min.js"></script>
+        <!-- BEGIN CUSTOM ANGULARJS SCRIPTS -->
+        <script src="./theme_components/js/application.js"></script>
+        <script src="./theme_components/js/plugins.js"></script>
+        <script src="./theme_components/assets/global/plugins/icheck/icheck.min.js"></script>
+        <script type="text/javascript" src="./bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+        
+        <script src="mainCtrl.js"></script>
+        <script src="./app/layout/topbarCtrl.js"></script>
+        <script src="./app/layout/laClockCtrl.js"></script>
+        <script src="./app/directives.js"></script>
+        <!-- END CUSTOM ANGULARJS SCRIPTS -->
+        <!-- endbuild -->
+        <!-- inject:js -->
+        <!-- endinject -->
+    </body>
+</html>

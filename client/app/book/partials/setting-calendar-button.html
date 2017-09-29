@@ -1,0 +1,61 @@
+<div class="btn-group">
+    <button type="button" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span class="fa fa-gear c-gray"></span> <span class="caret c-gray"></span>
+    </button>
+    <ul class="dropdown-menu width-200">
+        <li class="p-l-5"><strong>Display mode: </strong></li>
+        <li ng-class="{'bg-gray-light': calendar_mode == 'today'}">
+            <a href="" ng-click="switchCalendarWeekMode('today')">
+                Week starts from today 
+                <span ng-show="calendar_mode == 'today'" class="fa fa-circle f-7"></span>
+            </a>
+        </li>
+        <li ng-class="{'bg-gray-light': calendar_mode == 'sunday'}">
+            <a href="" ng-click="switchCalendarWeekMode('sunday')">
+                Week starts from Sunday
+                <span ng-show="calendar_mode == 'sunday'" class="fa fa-circle f-7"></span>
+            </a>
+        </li>
+        <li ng-show="isLoggedIn" class="p-l-5"><strong>Notifications: </strong></li>
+        <li ng-show="isLoggedIn" ng-click="$event.stopPropagation()" class="m-l-10 p-b-5 ">
+            <div>
+                <span>Booking created</span>
+                <label class="switch m-t-0 pull-right">
+                    <input type="checkbox" class="switch-input" ng-model="emailNotifications.bookingCreated" ng-change="saveNotificationSettings()">
+                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                    <span class="switch-handle"></span>
+                </label>
+            </div>
+        </li>
+        <li ng-show="isLoggedIn" ng-click="$event.stopPropagation()" class="m-l-10 p-b-5 m-t-5 ">
+            <div>
+                <span>Booking shared</span>
+                <label class="switch m-t-0 pull-right">
+                    <input type="checkbox" class="switch-input" ng-model="emailNotifications.newSharedBooking" ng-change="saveNotificationSettings()">
+                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                    <span class="switch-handle"></span>
+                </label>
+            </div>
+        </li>
+        <li ng-show="isLoggedIn" ng-click="$event.stopPropagation()" class="m-l-10 p-b-5 m-t-5 ">
+            <div>
+                <span>Booking updated</span>
+                <label class="switch m-t-0 pull-right">
+                    <input type="checkbox" class="switch-input" ng-model="emailNotifications.bookingUpdated" ng-change="saveNotificationSettings()">
+                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                    <span class="switch-handle"></span>
+                </label>
+            </div>
+        </li>
+        <li ng-show="isLoggedIn" ng-click="$event.stopPropagation()" class="m-l-10 p-b-5 m-t-5">
+            <div>
+                <span>Booking reminder</span>
+                <label class="switch m-t-0 pull-right">
+                    <input type="checkbox" class="switch-input" ng-model="emailNotifications.bookingRemind" ng-change="saveNotificationSettings()">
+                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                    <span class="switch-handle"></span>
+                </label>
+            </div>
+        </li>
+    </ul>
+</div>

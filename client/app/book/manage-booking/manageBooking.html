@@ -1,0 +1,148 @@
+<div class='row'>
+    <div ng-show="error" class="col-sm-12">
+        <div class=" alert alert-danger">{{time_error}}</div>
+    </div>            
+    <div class='col-sm-6'>
+        <div class='form-group'>
+            <label class='col-sm-4 control-label'>Time in</label>
+            <div ng-if="start" class='form-control-static col-sm-8'>{{time_in}}</div>
+            <div ng-if="!start" class="col-sm-8"><input ng-model="time_in" placeholder='Time in' name="time_in" type="text" class="form-control" required></div>
+        </div>
+    </div>
+    <div class='col-sm-6'>
+        <div class='form-group'>
+            <label class='col-sm-4 control-label'>Time out</label>
+            <div ng-if="end" class='form-control-static col-sm-8'>{{time_out}}</div>
+            <div ng-if="!end" class="col-sm-8"><input ng-model="time_out" placeholder='Time out' name="time_out" type="text" class="form-control" required></div>
+        </div>
+    </div>
+</div>
+<div class='row'>
+    <div class='col-sm-6'>
+        <div class='form-group'>
+            <label class='control-label col-sm-4'>Production</label>
+            <div class="col-sm-8">
+                <input ng-model="event_info.production" class='form-control' placeholder='Production' type='text' name='production' required/>
+            </div>
+        </div>
+    </div>
+    <div class='col-sm-6'>
+        <div class='form-group'>
+            <label class='control-label col-sm-4'>Episode number</label>
+            <div class="col-sm-8">
+                <input ng-model="event_info.episode_number" class='form-control' placeholder='Episode Number' type='text' name='episode_number'/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class='col-sm-6'>
+        <div class='form-group'>
+            <label class='control-label col-sm-4'>Status</label>
+            <div class="col-sm-8 p-r-0">
+                <div class="input-group">
+                    <select ng-model="event_info.booking_status" ng-change="selectStatus()" class='form-control' name='booking_status' required>
+                        <option value="" disabled selected>Select status...</option>
+                        <option value='Hold'>Hold</option>
+                        <option value='Book'>Book</option>
+                    </select>
+                    <span class="input-group-addon bg-white"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="event_info.booking_status == 'Hold'" class="col-sm-6">
+        <div class="form-group">
+            <label class="control-label col-sm-4">Estimate</label>
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <select ng-model="event_info.estimate" ng-options="option as option for option in [1,2,3,4,5,6,7,8,9]" class='form-control event-hold' name='estimate' required>
+                        <option value="" disabled>Select estimation...</option>
+                    </select>
+                    <span class="input-group-addon">hours</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='row'>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label class='control-label col-sm-2'>Post-Production Coordinator</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-4 p-r-0">
+                        <input ng-model="event_info.post_production_name" class='form-control' placeholder='Name' type='text' name='post_production_name'/>
+                    </div>
+                    <div class="col-sm-4 p-r-0">
+                        <input ng-model="event_info.post_production_phone" class='form-control' placeholder='Phone Number' type='text' name='post_production_phone'/>
+                    </div>
+                    <div class="col-sm-4">
+                        <input ng-model="event_info.post_production_email" class='form-control' placeholder='Email' type='email' name='post_production_email'/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='row'>
+    <div class='col-sm-12'>
+        <div class="form-group m-b-0">
+            <label class='control-label col-sm-2'>Actors</label>
+            <div class="col-sm-10">
+                <div class='row' ng-repeat="actor in event_info.actors track by $index" ng-repeat-finish="setInputActors()">
+                    <div class='col-sm-5 prepend-icon p-r-0'>
+                        <input type="text" class="form-control" ng-model="event_info.actors[$index].name" placeholder="Actor name">
+                        <i class="icon-user"></i>
+                    </div>
+                    <div class='col-sm-5 prepend-icon p-r-0'>
+                        <input type="text" class="form-control actor-start-time" name="actor_start_time[]" ng-value="event_info.actors[$index].start_time" placeholder="Choose a start time...">
+                        <i class="icon-clock"></i>
+                    </div>
+                    <div class='col-sm-2'>
+                        <button class="btn btn-default bg-white" rel="popover" type="button"
+                                ng-mouseenter="removeActorButtonsHover = true"
+                                ng-mouseleave="removeActorButtonsHover = false">
+                            <span ng-class="{'c-red': removeActorButtonsHover, 'text-muted': !removeActorButtonsHover}" class="icons-office-52"></span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-sm m-l-0" type="button" ng-click="plusOneActor(event_info.actors)"><span class="text-muted">add actor</span></button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div class='row'>
+    <div class='col-sm-6'>
+        <div class='form-group m-b-0'>
+            <div class="col-sm-4">
+                <label class="control-label">Additional Information</label>
+            </div>
+            <div class="col-sm-8">
+                <textarea ng-model="event_info.additional_information"
+                  class='form-control' name='additional_information'
+                  rows='6' placeholder='Additional Information'></textarea>
+            </div>
+        </div>
+    </div>
+    <div class='col-sm-6 p-l-0'>
+        <div class='form-group m-b-0'>
+            <div class="icheck-inline p-r-0" ng-class="{'col-sm-12' : !event_info.food_request, 'col-sm-4': event_info.food_request}">
+                <label>
+                    <input ng-model="event_info.food_request" icheck data-checkbox="icheckbox_square-blue" value='true' type='checkbox' name='food_request'>
+                    Requests for food or beverages?
+                </label>
+            </div>
+            <div class="col-sm-8 p-l-0">
+                <textarea ng-model="event_info.food_request_details"
+                          ng-class="{'hide' : !event_info.food_request}" 
+                          name="request_for_food_instruction" id=""
+                          placeholder="Included are healthy drinks and snacks from Whole Foods and Trader Joes.  Upon request we can order from Urth Cafe, Peet's Coffee, and Shoop's Deli. The cost will be billed back to the production."
+                          rows="6" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

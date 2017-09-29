@@ -1,0 +1,77 @@
+<!-- END PAGE SPINNER -->
+<section>
+    <div class="main-content">
+        <div class="booking-header">
+            <div class="logopanel">
+                <a href="/"></a>
+            </div>
+            <div class="phone-number">
+                <a href="skype:+13106137138?call" class="phone m-l-10">
+                    <i class="fa fa-phone-square"></i> 310-613-7138
+                </a>
+            </div>
+            <!-- BEGIN TOPBAR -->
+            <div class="topbar" data-ng-controller="topbarCtrl">
+                <div class="header-right">
+                    <ul class="header-menu nav navbar-nav">
+                        <!-- BEGIN USER DROPDOWN -->
+                        <li class="dropdown" id="user-header" ng-show="!isLoggedIn">                        
+                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <span class="icon-user"></span>
+                                <span>&nbsp;&nbsp;Log in</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a ng-href="{{serverUrl}}auth/facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                                </li>
+                                <li>
+                                    <a ng-href="{{serverUrl}}auth/google"><i class="fa fa-google"></i><span>Google</span></a>
+                                </li>
+                                <li>
+                                    <a ng-href="{{serverUrl}}auth/linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" id="user-header" ng-show="isLoggedIn">
+                            <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img src="{{profilePhoto}}" alt="user image">
+                                <span class="username">{{fullname}}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a data-target="#" ng-click="logout()"><i class="icon-logout"></i><span>Logout</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER DROPDOWN -->
+                    </ul>
+                </div>
+                <!-- header-right -->
+            </div>
+            <!-- END TOPBAR -->
+        </div>
+        <!-- BEGIN PAGE CONTENT -->
+        <div class="at-view-slide-in-left page-content m-t-0 p-t-0">
+            <div ui-view></div>
+            <div class="footer m-t-0 p-b-0 booking-footer">
+                <div class="copyright p-t-10 p-b-10">
+                    <p class="text-center">
+                        <span data-ng-controller="laClockCtrl">
+                            Los Angeles / PST <span class="time">{{time}}</span> &nbsp;-&nbsp;
+                        </span>
+                        <span>Copyright <span class="copyright">&copy;</span> 2017 </span><br/>
+                        <span>3rdStreetADR</span>.
+                        <span>All rights reserved. </span>
+                    </p>
+                    <p class="text-center phone-number mobile-only">
+                        <a href="skype:+13106137138?call" class="phone m-l-10">
+                            <i class="fa fa-phone-square"></i> 310-613-7138
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+    </div>
+    <!-- END MAIN CONTENT -->
+</section>

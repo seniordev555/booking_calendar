@@ -1,0 +1,157 @@
+<div class="event-logs-container">
+    <div ng-show="!eventLogs.isAdmin && !eventLogs.booking.event_logs.length">
+        There is no event logs yet. Admin will update later.
+    </div>
+    <div ng-show="!eventLogs.isAdmin && eventLogs.booking.event_logs.length">
+        <div class="panel border m-b-10" style="box-shadow:none;" ng-repeat="item in eventLogs.booking.event_logs track by $index">
+            <div class="panel-header panel-controls">
+                <div class="m-b-10 m-t-10">
+                    <span ng-class="{'c-gray-light': !item.isCharged, 'c-green charged': item.isCharged}"
+                          tooltip-custom tooltip-custom-title="{{item.isCharged ? 'Charged' : 'Uncharge'}}"
+                          class="event-log-charge icon-credit-card m-r-10">
+                    </span>
+                    <span class="f-16 m-r-10">{{item.description|| "No Description"}}</span>
+                    <span class="c-gray" ng-show="item.start_time">
+                        <span class="m-r-10">&mdash;</span>
+                        <span class="m-r-10">Start: <strong>{{item.start_time}}</strong></span>
+                    </span>
+                    <span class="c-gray" ng-show="item.end_time">
+                        <span class="m-r-10">&mdash;</span>
+                        <span class="m-r-10">End: <strong>{{item.end_time}}</strong></span>
+                    </span>
+                    <div class="control-btn" ng-class="{'hidden': !eventLogs.isAdmin}">
+                        <a href="" class="panel-close" ng-click="eventLogs.isAdmin && eventLogs.remove($index)">
+                            <i class="icon-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-content p-t-0 p-b-0">
+                <div ng-show="item.isCharged && !eventLogs.isAdmin">
+                    <div class="bd-green">
+                        <div class="row m-b-10">
+                            <div class="col-sm-6">
+                                <div class="p-5 p-l-10" ng-class="{'bg-lighter': $odd}"
+                                     ng-repeat="charge in eventLogs.booking.event_logs[$index].charges">
+                                    <strong>{{charge.description}}</strong> <span class="pull-right">{{charge.amount| currency:"USD $"}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="eventLogs.isAdmin">
+        <!-- Events -->
+        <div ng-repeat="item in eventLogs.booking.event_logs track by $index">
+            <div class="row">
+                <div class="col-sm-2 p-r-0">
+                    <label class="m-b-0">Start Time</label>
+                    <input ng-model="eventLogs.booking.event_logs[$index].start_time"
+                           type="text" placeholder="Time MM-DD HH:mm PM"
+                           class="form-control event-log-timepicker input-sm" id="event-log-start-time-{{$index}}">
+                </div>
+                <div class="col-sm-6 p-r-0 p-l-5">
+                    <label class="m-b-0">Description</label>
+                    <input ng-model="eventLogs.booking.event_logs[$index].description"
+                           ng-keydown="eventLogs.descriptionChange($event, $index)"
+                           type="text" class="form-control input-sm" id="event-log-description-{{$index}}"
+                           placeholder="Event description"
+                           uib-typeahead="description for description in eventLogs.descriptions | filter:$viewValue"
+                           typeahead-show-hint="true"
+                           typeahead-min-length="0">
+                </div>
+                <div class="col-sm-2 p-r-0 p-l-5">
+                    <label class="m-b-0">End Time</label><br>
+                    <div ng-show="!eventLogs.isEndedEventLog[$index]">
+                        <button type="button" ng-click="eventLogs.endEventLog($index)" class="btn btn-sm btn-square m-l-0">
+                            <span class="text-muted">End</span>
+                        </button>
+                    </div>
+                    <div ng-show="eventLogs.isEndedEventLog[$index]">
+                        <input 
+                            ng-model="eventLogs.booking.event_logs[$index].end_time"
+                            name="end_time"
+                            type="text" placeholder="Time MM-DD HH:mm PM"
+                            class="form-control event-log-timepicker input-sm"
+                            id="event-log-end-time-{{$index}}">
+
+                    </div>
+                </div>
+                <div class="col-sm-1 p-r-0 p-l-5">
+                    <label>Billed?</label>
+                    <div class="icheck-inline m-t-0">
+                        <label class="m-b-0 m-l-10">
+                            <input ng-model="eventLogs.booking.event_logs[$index].is_billed"
+                                   icheck data-checkbox="icheckbox_square-blue" value='true'
+                                   type='checkbox' name='is_billed'>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-1 p-l-5">
+                    <a class="btn btn-default bg-white m-t-20 m-b-0"
+                       ng-click="eventLogs.isAdmin && eventLogs.removeEvent($index)"
+                       ng-mouseenter="removeEventLogButtonsHover = true"
+                       ng-mouseleave="removeEventLogButtonsHover = false"
+                       title="Remove Log">
+                        <i class="icons-office-52" ng-class="{'c-red': removeEventLogButtonsHover, 'text-muted': !removeEventLogButtonsHover}"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <hr class="m-b-5 m-t-5">
+                </div>
+            </div>
+        </div>
+        <div ng-show="!eventLogs.isAddingEventLog">
+            <div class="row">
+                <div class="col-sm-2 p-r-0"><label class="m-b-0">Start Time</label></div>
+            </div>
+            <button type="button" ng-click="eventLogs.startEventLog()" class="btn btn-sm btn-square m-b-5 m-0">
+                <span class="text-muted">Start</span>
+            </button>
+            <div class="row">
+                <div class="col-sm-12">
+                    <hr class="m-b-5 m-t-5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Charges -->
+        <div class="m-t-5">
+            <label>
+                Additional Charges
+            </label>
+            <div class="row" ng-repeat="charge in eventLogs.booking.additional_charges track by $index">
+                <div class="col-sm-11 p-r-0">
+                    <div class="row">
+                        <div class="col-sm-8 p-r-0">
+                            <input ng-model="charge.description" class="form-control input-sm m-b-5" type="text" placeholder="Charge Description">
+                        </div>
+                        <div class="col-sm-4 p-l-5">
+                            <div class="input-group">
+                                <span class="input-group-addon">USD $</span>
+                                <input ng-model="charge.amount" class="form-control charge-amount input-sm" type="text" placeholder="Charge Amount">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1 p-l-5">
+                    <a ng-click="eventLogs.removeCharge($index)"
+                       ng-mouseenter="removeChargeButtonsHover = true"
+                       ng-mouseleave="removeChargeButtonsHover = false"
+                       class="btn btn-default bg-white m-0">
+                        <i class="icons-office-52" ng-class="{'c-red': removeChargeButtonsHover, 'text-muted': !removeChargeButtonsHover}"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <button type="button" ng-click="eventLogs.addCharge()" class="btn btn-sm btn-square m-0">
+                    <span class="text-muted">Add charges</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

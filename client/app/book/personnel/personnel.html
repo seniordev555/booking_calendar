@@ -1,0 +1,93 @@
+<div class="personel-container">
+    <div class="row">
+        <div class='col-sm-12'>
+            <div class='form-group'>
+                <label class='col-sm-2 control-label'>ADR Mixer</label>
+                <div class="col-sm-4">
+                    <select
+                        name="adr_mixer"
+                        id="adr_mixer"
+                        ng-model="vm.booking.personnel.adr_mixer._id"
+                        ng-options="item._id as item.fullname for item in vm.data.adr_mixers"
+                        class="form-control">
+                        <option value="" selected disabled>Select ADR Mixer...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-sm-12'>
+            <div class='form-group m-b-5' ng-repeat="email in vm.booking.personnel.shared_emails track by $index">
+                <label class='col-sm-2 control-label' ng-if="$index == 0">Share with others</label>
+                <div class="col-sm-6" ng-class="{'col-sm-offset-2' : $index > 0}">
+                    <input type="text" ng-model="vm.booking.personnel.shared_emails[$index]" placeholder="Enter email address" uib-typeahead="item as item.value for item in vm.searchUsersForSharing($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control sharing-textbox" typeahead-popup-template-url="searchUserAutoCompleteTemplate.html" typeahead-wait-ms="500" autofocus>
+                </div>
+                <div class="col-sm-4 p-0">
+                    <button type="button" class="btn btn-link c-gray m-0"
+                            ng-mouseenter="removeSharedEmailButtonsHover = true"
+                            ng-mouseleave="removeSharedEmailButtonsHover = false"
+                            ng-class="{'hide' : $index == vm.booking.personnel.shared_emails.length - 1}"
+                            ng-click="vm.removeSharedEmail($index)">
+                        <i class="fa fa-remove f-20"  ng-class="{'c-red': removeSharedEmailButtonsHover, 'text-muted': !removeSharedEmailButtonsHover}"></i>
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-link c-gray m-0"
+                        ng-class="{'hide' : $index != vm.booking.personnel.shared_emails.length - 1}"
+                        ng-click="vm.addSharedEmail()">
+                        <i class="fa fa-plus f-20"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <p class="form-control-static text-muted">
+                        <span ng-if="vm.booking.personnel.shared_users.length">
+                            Shared with:&nbsp;
+                            <span ng-repeat="user in vm.booking.personnel.shared_users track by user._id">
+                                <span class="badge f-14 p-5 m-b-5">
+                                    <span ng-if="user.fullname && !user.email">
+                                        {{user.fullname}}
+                                    </span>
+                                    <span ng-if="user.fullname && user.email">
+                                        {{user.fullname}} - {{user.email}}
+                                    </span>
+                                    <span ng-if="!user.fullname && user.email">
+                                        {{user.email}}
+                                    </span>
+                                    <span ng-if="user._id == vm.user._id"> (you)</span>&nbsp;
+                                    <a class="c-white" href="" ng-click="vm.removeSharedUser($index)" title="Remove share">x</a>
+                                </span>&nbsp;
+                            </span>
+                        </span>
+                        <span ng-if="!vm.booking.personnel.shared_users.length">
+                            Not shared with anyone yet
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="searchUserAutoCompleteTemplate.html">
+    <div class="search-user-autocomplete-popup-wrapper"
+        ng-style="{top: position().top+'px', left: position().left+'px'}"
+        style="display: block;"
+        ng-show="isOpen() && !moveInProgress"
+        aria-hidden="{{!isOpen()}}">
+            <ul class="dropdown-menu" role="listbox">
+                <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }"
+                    ng-mouseenter="selectActive($index)" ng-click="!match.model.shared && selectMatch($index)" role="option" id="{{::match.id}}">
+                    <a href="" ng-bind-html="match.model.value | uibTypeaheadHighlight:query" ng-if="!match.model.shared"></a>
+                    <span class="p-l-10 p-r-10 c-gray" ng-if="match.model.shared">
+                        <em ng-bind-html="match.model.value"></em>
+                    </span>
+                </li>
+            </ul>
+    </div>
+</script>

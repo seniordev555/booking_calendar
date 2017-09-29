@@ -1,0 +1,13 @@
+- var ts = booking.technical_specifications || {}
+- var director = ts.local_or_remote_actor_and_director
+- var startDate = moment(booking.time_in).format("MMMM DD")
+- var startTime = moment(booking.time_in).format("HH:mm")
+- var endTime = moment(booking.time_out).format("HH:mm")
+- var eol = "\n"
+
+| Hi, #{eol}
+| Your Booking on #{startDate} from #{startTime} to #{endTime} was upated.#{eol}
+
+include ../booking-details-text.jade
+
+| #{eol} You may edit your Booking by to #{booking_url} or call us at 310-613-7138

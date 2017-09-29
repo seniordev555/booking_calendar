@@ -1,0 +1,42 @@
+{
+  "name": "booking studio app",
+  "version": "0.1",
+  "authors": [
+    "service@trexanhlab.com"
+  ],
+  "license": "private",
+  "homepage": "trexanhlab.com",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.8",
+    "json3": "~3.3.2",
+    "angular-ui-router": "0.2.15",
+    "angular-permission": "0.3.1",
+    "ocLazyLoad": "1.0.9",
+    "angular-resource": "~1.4.8",
+    "angular-cookies": "~1.4.8",
+    "angular-sanitize": "~1.4.8",
+    "angular-animate": "~1.4.8",
+    "angular-touch": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-bootstrap": "~0.14.3",
+    "jquery": "~2.1.4",
+    "jquery-ui": "~1.11.4",
+    "moment": "momentjs#~2.10.6",
+    "moment-timezone": "^0.5.4",
+    "fullcalendar": "~2.5.0",
+    "font-awesome-animation": "~0.0.7",
+    "jquery-validation": "1.13.1",
+    "jquery-backstretch": "2.0.4",
+    "ladda": "0.9.8",
+    "lodash": "3.10.0",
+    "intro.js": "~2.0.0",
+    "noty": "^2.3.8",
+    "animate.css": "^3.5.1",
+    "fullcalendar-mobile": "^1.5.2"
+  },
+  "resolutions": {
+    "jquery": "~2.1.4",
+    "select2": "3.5.3"
+  }
+}

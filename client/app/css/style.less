@@ -1,0 +1,124 @@
+@logoContainerWidth:195px;
+@dark: #000;
+
+/* logo: more width for custom logo */
+@media screen and (min-width: 1024px) {
+    .sidebar-top .sidebar .logopanel {
+        width: @logoContainerWidth !important;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .sidebar-top.fixed-topbar .topbar {
+        left: @logoContainerWidth !important;
+    }
+}
+
+body {
+    padding-right: 0 !important;
+}
+
+.sidebar-top .main-content .page-content  {
+    top: 0px;
+}
+.sidebar-top .topbar  {
+    left: initial !important;
+    float: right;
+    z-index: 3;
+}
+
+.sidebar-top:not(.fixed-topbar) .main-content {
+    margin-top: 0;
+}
+@headerHeight: 50px;
+@logoHeight: 30px;
+.main-content {
+    .booking-header {
+        background: white;
+        height: @headerHeight;
+
+        .logopanel {
+            width: @logoContainerWidth !important;
+            height:@headerHeight;
+            position: absolute;
+            z-index: 1;
+            background: #fff;
+            padding:10px;
+            a {
+                background: url(../../theme_components/assets/global/images/logo/logo-dark.png) no-repeat;
+                height:@logoHeight;
+                display:block;
+            }
+        }
+        .phone {
+            position: absolute;
+            left: 190px;
+            z-index: 1;
+            top: 23px;
+            font-size: 13px;
+            color: #777;
+        }
+    }    
+}
+.modal-dialog {
+    margin: 30px auto;
+}
+@import "fullcalendar";
+@import "form";
+@import "share";
+@import "deliverables";
+@import "mobile";
+
+/* manage booking - personnel tab */
+.personel-container {
+    .search-user-autocomplete-popup-wrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        background-color: #f9f9f9;
+
+        & > .dropdown-menu {
+            position: static;
+            float: none;
+            display: block;
+            min-width: 160px;
+            background-color: transparent;
+            border-radius: 0;
+        }
+    }
+}
+
+.fc-event.highlighted {
+    -webkit-box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.6);
+    box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.6);
+}
+.btn-blue.ladda-button, .btn-danger.ladda-button {
+    font-size:14px;
+    padding: 7px 24px 8px 24px;
+}
+.btn-blue.ladda-button {
+    background:#00a2d9;
+}
+.btn-danger.ladda-button {
+    background:#c75757;
+}
+
+// make introjs button look bigger
+.introjs-button {
+    padding: 6px 16px;
+    margin-top: 15px;
+}
+.introjs-tooltip {
+    min-width: 350px;
+    max-width: 350px;
+}
+
+.p-b-5 {
+    padding-bottom: 5px !important;
+}
+
+.width-200 {
+    width: 200px !important;
+}

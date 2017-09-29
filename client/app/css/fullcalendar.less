@@ -1,0 +1,173 @@
+#calendar {
+    margin-top: 0;
+    td {
+        font-size: 0.95em;
+    }
+}
+.fc-toolbar {
+    height: 50px;
+    background: transparent;
+    padding: 10px;
+    .fc-addBookingBtn-button {
+        background-color: #18a689;
+        text-shadow: none;
+        background-image: none; 
+        height: 2.1em; 
+        color: #fff;
+    }
+    .fc-addHoldBtn-button {
+        background-color: #EBC85E;
+        background-image: none;
+        color: #fff; 
+        height: 2.1em;
+        text-shadow: none;
+    }
+    .fc-right {
+        position: relative;
+        .fc-dropdownBtn-button {
+            display: none;
+        }
+        .fc-dropdown-toggle {
+            right: 0;
+            left: initial;
+        }
+    }    
+}
+.fc-event {
+    border: none;
+}
+.fc-state-default.fc-corner-right.fc-state-disabled {
+    background: #FBF8E3 !important;
+}
+.fc-time-grid-event {
+    /* Confirmed booking will be bigger and always on top of others */
+    &+.bg-green,
+    &+.bg-red {
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 999 !important;
+    }
+    .fc-content {
+        font-size: 1.5em;
+        .profile-photo {
+            position: absolute;
+            right: 0;
+            z-index: -1;
+        }
+    }
+    /* Garbage button */
+    .remove-button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: 999 !important;
+    }
+    /* Resize start time on top of booking */
+    .fc-start-resizer {
+        top: 0;
+    }
+    .event-image-container {
+        margin-top: 5px;
+        text-align: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: rgba(240, 240, 240, 0.7);
+        .share-link, span {
+            margin-top: 6px;
+            display: inline-block;
+        }
+        .share-link {
+            color:#999;
+            margin-left: 2px;
+        }
+    }
+    // Make the Hold color more of a faint yellow
+    &.bg-yellow {
+        opacity: 0.7;
+        color: @dark !important;
+    }
+}
+
+@media all and (max-width: 1024px) {
+    #calendar {
+        margin-top: 10px;
+        td{
+            font-size: 0.85em;
+        }
+    }
+    .fc-time-grid-event .fc-time {
+        font-size: 1.5em;
+    }
+    .fc-time-grid-event .fc-title {
+        font-size: 1.5em;
+    }
+
+    .page-content {
+        .setting-calendar {
+            position: absolute;
+            top: 10px;
+        }    
+    }  
+    .nav-tabs > li > a::before {
+        height: 0;
+    }
+}
+
+@media all and (max-width: 594px) {
+    #calendar {
+        margin-top: 10px;
+        .fc-toolbar {
+            margin-bottom: 0;
+            padding: 5px;
+            height: 40px;
+        }
+    }
+    #booking-modal {
+        .nav-tabs > li {
+            float: initial;
+        }    
+    }    
+}
+
+@media all and (max-width: 480px) {
+    .fc-toolbar {
+        .fc-addBookingBtn-button, 
+        .fc-addHoldBtn-button,
+        .fc-today-button {
+            display: none !important;
+        }
+        .fc-right {
+            .fc-dropdownBtn-button {
+                display: block;
+            }
+        }        
+    }    
+}
+
+.setting-calendar {
+    @offset: 10px;
+    position: fixed;
+    top: 50px;
+    right: @offset;
+    margin-right: 0;
+    width:35px;
+    z-index: 1;
+    .dropdown-toggle {
+        padding: 0;
+        margin: 0;
+        .caret {
+            margin-left: 4px;
+        }
+    }
+    .dropdown-menu {
+        left: auto;
+        right: 0;
+    }
+    &.left {
+        left: @offset;
+        .dropdown-menu {
+            right: auto;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+p Production: #{booking.production} 
+    if booking.episode_number
+        | Episode Number: #{booking.episode_number}
+if booking.estimate
+    p - Estimate: #{booking.estimate}
+
+if booking.actors.length
+    p - Actors:
+        ul
+            each actor in booking.actors
+                li Name: #{actor.name}, Time: #{actor.start_time}
+if booking.additional_information
+    p - Additional Infomation: #{booking.additional_infomation}
+
+if (director == 'local_actor_director')
+    p - Local Actor Director
+else if ( director == 'local_director_with_remote_actor')
+    p - Local Director with Remote Actor
+        ul
+            each client in ts.clients
+                li #{client.title}
+else if (director == 'local_actor_with_remote_director')
+    p - Local Actor with Remote Director
+        ul
+            each client in ts.clients
+                li #{client.title}

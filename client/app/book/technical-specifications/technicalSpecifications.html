@@ -1,0 +1,153 @@
+<div class="row">
+    <!-- PRO TOOL, REMOTE CLIENTS... -->
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class='form-group m-b-5'>
+                    <label class='col-sm-12 control-label'>Select your Pro Tools settings:</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class='form-group m-b-5'>
+                    <div class="col-sm-12 p-r-0">
+                        <div class="input-group">
+                            <select ng-model="vm.booking.technical_specifications.sample_rate"
+                                    ng-options="option as option for option in vm.sampleRates"
+                                    class='input-sm form-control' name='sample_rate'>
+                                <option value='' disabled selected>Select Sample Rate...</option>
+                            </select>
+                            <span class="input-group-addon bg-white"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group m-b-5">
+                    <div class="col-sm-12 p-r-0">
+                        <div class="input-group">
+                            <select ng-model="vm.booking.technical_specifications.frame_rate"
+                                    ng-options="option as option for option in vm.frameRates"
+                                    class='input-sm form-control' name='frame_rate'>
+                                <option value='' disabled selected>Select Frame Rate...</option>
+                            </select>
+                            <span class="input-group-addon bg-white"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-sm-6'>
+                <div class='form-group m-b-5'>
+                    <div class="col-sm-12">
+                        <input
+                            type="text"
+                            ng-model="vm.booking.technical_specifications.preferred_microphones_boom"
+                            class='input-sm form-control'
+                            placeholder='Microphones Boom, e.g: Countryman Lav'
+                            uib-typeahead="microphone for microphone in vm.microphones | filter:$viewValue"
+                            typeahead-focus-first="false"
+                            typeahead-min-length="0"
+                            name='preferred_microphones_boom'/>
+                    </div>
+                </div>
+            </div>
+            <div class='col-sm-6'>
+                <div class='form-group m-b-5'>
+                    <div class="col-sm-12">
+                        <input ng-model="vm.booking.technical_specifications.lavalier"
+                               class='input-sm form-control' placeholder='Lavalier...'
+                               type='text' name='lavalier'/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="m-t-5 m-b-5">
+        <div class='row'>
+            <div class='col-sm-12'>
+                <div class='form-group m-b-5'>
+                    <div class="icheck-inline col-sm-6 p-r-0 m-t-10">
+                        <label ng-repeat="option in vm.localOrRemoteActorAndDirectorOptions">
+                            <input ng-model="vm.booking.technical_specifications.local_or_remote_actor_and_director"
+                                   ng-change="vm.updateClientTechs()"
+                                   icheck data-radio="iradio_square-blue"
+                                   value='{{option.value}}' type='radio' name='remote_clients'> {{option.title}}
+                        </label>
+                    </div>
+                    <div ng-show="vm.isRemoteClient" class="col-sm-6 m-t-5">
+                        <div ng-repeat="client in vm.availableRemoteClients" class="icheck-inline m-t-5">
+                            <label class="m-b-0">
+                                <input ng-model="vm.selectedClients[client.value]"
+                                       ng-change="vm.updateClientTechs()"
+                                       icheck data-checkbox="icheckbox_square-blue" 
+                                       value='{{client.value}}' type='checkbox' name='clients'>
+                                &nbsp;{{client.title}}
+                            </label>
+                        </div>
+                        <label class='control-label col-sm-12 p-0'>Let us know ID, email or phone number</label>
+                        <div class="col-sm-12 m-t-10 p-0">
+                            <input ng-model="vm.booking.technical_specifications.client_info"
+                                   class='input-sm form-control' placeholder='ID, email or phone number...'
+                                   type='text' name='client_info'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="m-t-5 m-b-5">
+        <div class="row">
+            <div class="col-sm-12">
+                <strong>What’s needed for your session:</strong>
+                <ul class="col-sm-12">
+                    <li>QuickTime.mov with visual timecode (720p or 1080p, H.264 or Apple ProRes)</li>
+                    <li>Three .wav mono guide tracks (Dialog, Music, and FX)</li>
+                    <li>ADR cue-sheets (.pdf)</li>
+                    <li>Exhibit G or ACTRA sign in sheets (.pdf) for the Actors</li>
+                    <li>FTP, Dropbox, WeTransfer or Aspera instructions:</li>
+                </ul>
+                <textarea ng-model="vm.booking.technical_specifications.instructions"
+                          class='form-control' name='instructions'
+                          rows='2' placeholder='Instructions...'></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELIVERABLES -->
+    <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class='form-group m-b-5'>
+                    <label class='col-sm-12 control-label'>Deliverables:</label>
+                </div>
+            </div>
+        </div>
+        <ul class="todo-list ui-sortable">
+            <li ng-show="!vm.deliverables.length">There is 0 task.</li>
+            <li id="task-{{$index}}" ng-repeat="deliverable in vm.deliverables track by $index" ng-show="vm.deliverables.length" ng-class="{'done': deliverable.done}">
+                <span class="span-check m-0">
+                    <input ng-change="vm.assignDeliverables()" ng-model="vm.deliverables[$index].done" value="true" icheck type="checkbox" data-checkbox="icheckbox_square-blue" />
+                </span>
+                <span class="todo-task" ng-click="vm.showInputContentDeliverables($index)" style="white-space: pre-wrap" ng-bind="vm.deliverables[$index].content">
+                </span>
+                <span class="todo-options pull-right">
+                    <a href="" ng-click="vm.removeDeliverable($index)" class="todo-delete"><i class="icons-office-52"></i></a>
+                </span>
+            </li>
+        </ul>
+        <div class="clearfix m-t-10">
+            <div class="pull-left m-l-10" ng-show="vm.deliverables.length">
+                <label>
+                    <input ng-change="vm.markDoneAllDeliverables()" ng-model="vm.allDeliverablesDone" value="true" icheck type="checkbox" data-checkbox="icheckbox_square-blue" />
+                    <span>{{vm.allDeliverablesDone ? 'Undone All' : 'Mark All Done'}}</span>
+                </label>
+            </div>
+            <div class="pull-right">
+                <button type="button" class="btn btn-sm add-deliverable" ng-click="vm.addDeliverable()"><span class="text-muted">Add Task</span></button>
+            </div>
+        </div>
+    </div>
+</div>

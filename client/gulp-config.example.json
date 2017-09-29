@@ -1,0 +1,6 @@
+{
+    "_notice": "remove googleAnalyticsTrackingId if not needed",
+    "subFolderPath" : "./booking/",
+    "destinationFolder": "dist",
+    "googleAnalyticsTrackingId": "UA-6512797-6"
+}

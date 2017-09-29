@@ -1,0 +1,11 @@
+- var startDate = moment(booking.time_in).format("MMMM DD")
+- var startTime = moment(booking.time_in).format("HH:mm")
+- var endTime = moment(booking.time_out).format("HH:mm")
+- var eol = "\n"
+
+| #{booking.owner.fullname} has invited you to #[a(href=booking_url) clicking here] to join and view an 
+|  ADR Booking on #{startDate} from #{startTime} to #{endTime}.#{eol}
+
+include ../booking-details-text.jade
+
+| You may this your Booking by to #{booking_url} or call us at 310-613-7138

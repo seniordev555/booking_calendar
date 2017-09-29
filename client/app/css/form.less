@@ -1,0 +1,27 @@
+/* Styling error and success class */
+@background-hold: #faebcc;
+@background-book: #d6e9c6;
+
+.event-hold,
+.event-hold:focus {
+    background-color: @background-hold !important;
+}
+
+.event-book,
+.event-book:focus {
+    background-color: @background-book !important;
+}
+select.form-error {
+    background-color: #F7F2F2 !important;
+    border: 1px solid #EED3D7 !important;
+    color: #B94A48 !important;
+}
+
+/* 
+This element is used to force select fields having the same height as the other fields
+The padding value is to tweak the width of select field to be the same as the others
+*/
+.input-group-addon.bg-white {
+    padding-left: 7px;
+    padding-right: 7px;
+}

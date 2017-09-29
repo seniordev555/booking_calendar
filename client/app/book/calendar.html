@@ -1,0 +1,132 @@
+<div class="row">
+    <div class="col-md-12 p-0 no-bd">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Setting button -->
+        <div class="setting-calendar" ng-include="'./app/book/partials/setting-calendar-button.html'"></div>
+        <div class="setting-calendar left" ng-include="'./app/book/partials/setting-calendar-button.html'"></div>
+    </div>
+</div>
+
+<!-- BEGIN MODAL -->
+<div class="modal fade" id="booking-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg m-t-12">
+        <div class="modal-content">
+            <div class="modal-body">
+                <ng-include src="'./app/book/bookingForm.html'" ng-controller="manageBookingCtrl" onload="bookingFormOnLoad()"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
+
+<!-- BEGIN MODAL -->
+<div class="modal fade" id="drag-booking-modal" tabindex="-1" ng-keydown="dragging.keyboardEvent($event)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="dragging.undo()" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><strong>Confirm Update</strong></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button ng-click="dragging.undo()" class="btn btn-link pull-right">Cancel</button>
+                <button ng-click="dragging.submit()" class="btn btn-primary pull-right">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
+
+<!-- BEGIN MODAL -->
+<div class="modal fade" id="remove-booking-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><strong>Confirm Remove</strong></h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">Are you sure you want to delete this booking?</div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-link pull-right">Cancel</button>
+                <button ng-click="remove.submit()" class="btn btn-blue ladda-button pull-right confirm-remove-booking" data-style="slide-left">
+                    <span class="ladda-label">Submit</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
+
+<!-- BEGIN MODAL -->
+<div class="modal fade" id="login-notification-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>You need to login first to view this booking.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default pull-right">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
+
+<!-- BEGIN MODAL -->
+<div class="modal fade" id="tour-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><strong>Take a Tour?</strong></h4>
+            </div>
+            <div class="modal-body">
+                This tour will show you how to use the app.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-blue pull-right" id="start-tour">
+                    Let's go!
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-default pull-right">
+                    Show me next time
+                </button>
+                <button type="button" data-dismiss="modal" class="btn btn-link pull-right" ng-click="dontShowTourAgain = true">
+                    No, I got it
+                </button>
+                <input type="hidden" name="do_not_show_tour_again" ng-value="dontShowTourAgain" />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
+
+<!-- BEGIN MODAL -->
+<div class="modal fade" id="not-have-permission-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>You do not have permission to edit this booking. Please contact the booking owner to request the permission.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default pull-right">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->

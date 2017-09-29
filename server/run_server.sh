@@ -1,0 +1,1 @@
+PORT=3000 NODE_ENV=production pm2 start /var/www/new.3rdstreetadr.com_booking/v1.1.1/server/bin/www.js --name=booking_production

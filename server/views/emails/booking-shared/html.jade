@@ -1,0 +1,9 @@
+- var ts = booking.technical_specifications || {}
+- var director = ts.local_or_remote_actor_and_director
+p.
+    #{booking.owner.fullname} has invited you to #[a(href=booking_url) clicking here] to join and view an 
+    ADR Booking on #[strong #{moment(booking.time_in).format("MMMM DD")} from #{moment(booking.time_in).format("HH:mm")} to #{moment(booking.time_out).format("HH:mm")}]
+    .
+include ../booking-details-html.jade
+
+p You may edit this Booking by #[a(href=booking_url) clicking here] or call us at 310-613-7138

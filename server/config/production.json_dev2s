@@ -1,0 +1,51 @@
+{
+    "db": "mongodb://localhost/booking-pro",
+    "baseUrl": "/booking/",
+    "siteUrl": "https://3rdstreetadr.com/booking",
+    "clientFolder": "../client/dist",
+    "session": {
+        "secret": "SomeRandomString",
+        // minutes
+        "lifetime": 120
+    },
+    "auth": {
+        "facebook": {
+            "clientID": "1650786498516754",
+            "clientSecret": "a2d28baa6df8011ee42bfda79a683663",
+            "callbackURL": "http://dev2.3rdstreetadr.com/booking/auth/facebook/callback",
+            "profileFields": ["id", "displayName", "photos", "email"]
+        },
+        "google": {
+            "clientID": "1104794126-ut4pjk3nkmtth38lr17mpjgltcn78u1g.apps.googleusercontent.com",
+            "clientSecret": "eHcfgqWagFsfw6zOnBjORvCW",
+            "callbackURL": "http://dev2.3rdstreetadr.com/booking/auth/google/callback"            
+        },
+        "linkedin": {
+"clientID": "772onjr6kjvhxc",
+            "clientSecret": "t3b3XgUMYy11IKKg",
+            "callbackURL": "http://dev2.3rdstreetadr.com/booking/auth/linkedin/callback",
+            "scope": ["r_basicprofile", "r_emailaddress"]
+       }
+    },
+    "mailer": {
+        "service": "gmail",
+        "host": "smtp.gmail.com",
+        "port": 465,
+        "secure": true, // use SSL 
+        "auth": {
+            "user": "thirdstreetadr@gmail.com",
+            "pass": "puntaba11ena"
+        },
+        "from": "Third Street ADR <thirdstreetadr@gmail.com>"
+    },
+    "reminder": {
+        "remindTime": {
+            "duration" : 1,
+            "unit": "days" // minutes|hours|days|months|years
+        },
+        "scheduleTime": {
+            "duration" : 1,
+            "unit": "hours" // minutes|hours|days|months|years
+        }
+    }
+}

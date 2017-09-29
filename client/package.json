@@ -1,0 +1,23 @@
+{
+  "name": "booking_client",
+  "version": "1.1.0",
+  "description": "Web client for booking app",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.8.0",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-ga": "0.0.7",
+    "gulp-inject": "^3.0.0",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-rev-all": "^0.8.22",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-useref": "^3.0.4",
+    "merge2": "^1.0.0",
+    "ngmin": "^0.5.0",
+    "require-dir": "^0.3.0",
+    "run-sequence": "^1.1.5"
+  }
+}

@@ -1,0 +1,51 @@
+{
+    "db": "mongodb://localhost/booking-pro",
+    "siteUrl": "http://localhost",
+    "baseUrl": "/booking",
+    "clientFolder": "../client/dist",
+    "session": {
+        "secret": "SomeRandomString",
+        // minutes
+        "lifetime": 120
+    },
+    "auth": {
+        "facebook": {
+            "clientID": "915593771870591",
+            "clientSecret": "4bd105ef85900c0cc082f80f6c10fb36",
+            "callbackURL": "http://booking.site.trexanhlab.com/auth/facebook/callback",
+            "profileFields": ["id", "displayName", "photos"]            
+        },
+        "google": {
+            "clientID": "680930929552-mkcqsb6ct7jjju9uscc3nulkfkd0ig45.apps.googleusercontent.com",
+            "clientSecret": "8gcuOvSycbc9lxllF-u9Smcr",
+            "callbackURL": "http://booking.site.trexanhlab.com/auth/google/callback"            
+        },
+        "linkedin": {
+            "clientID": "75e4wgbbckomw8",
+            "clientSecret": "g795mcrK3KaZfarP",
+            "callbackURL": "http://booking.site.trexanhlab.com/auth/linkedin/callback",
+            "scope": ["r_basicprofile", "r_emailaddress"]
+        }
+    },
+    "mailer": {
+        "service": "gmail",
+        "host": "smtp.gmail.com",
+        "port": 465,
+        "secure": true, // use SSL 
+        "auth": {
+            "user": "account gmail",
+            "pass": "password"
+        },
+        "from": "Third Street ADR <thirdstreetadr@gmail.com>"
+    },
+    "reminder": {
+        "remindTime": {
+            "duration" : 1,
+            "unit": "days" // minutes|hours|days|months|years
+        },
+        "scheduleTime": {
+            "duration" : 1,
+            "unit": "hours" // minutes|hours|days|months|years
+        }
+    }
+}

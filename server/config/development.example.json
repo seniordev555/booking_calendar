@@ -1,0 +1,51 @@
+{
+    "db": "mongodb://localhost/booking-dev",
+    "siteUrl": "http://localhost",
+    "baseUrl": "/",
+    "session": {
+        "secret": "SomeRandomString",
+        // minutes
+        "lifetime": 120
+    },
+    "clientFolder": "../client",
+    "auth": {
+        "facebook": {
+            "clientID": "1709015495984625",
+            "clientSecret": "a2a18de41fba46d5afc134e213133b57",
+            "callbackURL": "http://localhost/booking/auth/facebook/callback",
+            "profileFields": ["id", "displayName", "photos", "email"]
+        },
+        "google": {
+            "clientID": "680930929552-7jjnpa41pvvoiupuiago3hrhp8j1h9qu.apps.googleusercontent.com",
+            "clientSecret": "CDtLJlzBGIYA-MFWYxPqls5H",
+            "callbackURL": "http://localhost/booking/auth/google/callback"            
+        },
+        "linkedin": {
+            "clientID": "75g9ds6cqofqy3",
+            "clientSecret": "crklDCSqNAQRwBKo",
+            "callbackURL": "http://localhost/booking/auth/linkedin/callback",
+            "scope": ["r_basicprofile", "r_emailaddress"]
+        }
+    },
+    "mailer": {
+        "service": "gmail",
+        "host": "smtp.gmail.com",
+        "port": 465,
+        "secure": true, // use SSL 
+        "auth": {
+            "user": "account gmail",
+            "pass": "password"
+        },
+        "from": "Third Street ADR <thirdstreetadr@gmail.com>"
+    },
+    "reminder": {
+        "remindTime": {
+            "duration" : 1,
+            "unit": "days" // minutes|hours|days|months|years
+        },
+        "scheduleTime": {
+            "duration" : 1,
+            "unit": "hours" // minutes|hours|days|months|years
+        }
+    }
+}
