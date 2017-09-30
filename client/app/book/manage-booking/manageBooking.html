@@ -1,7 +1,7 @@
 <div class='row'>
     <div ng-show="error" class="col-sm-12">
         <div class=" alert alert-danger">{{time_error}}</div>
-    </div>            
+    </div>
     <div class='col-sm-6'>
         <div class='form-group'>
             <label class='col-sm-4 control-label'>Time in</label>
@@ -65,6 +65,16 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class='form-group'>
+            <label class='control-label col-sm-4'>Purchase Number</label>
+            <div class="col-sm-8">
+                <input ng-model="event_info.purchase_number" class='form-control' placeholder='Purchase Number' type='text' name='purchase_number' />
+            </div>
+        </div>
+    </div>
+</div>
 <div class='row'>
     <div class="col-sm-12">
         <div class="form-group">
@@ -112,7 +122,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 <div class='row'>
@@ -138,7 +148,7 @@
             </div>
             <div class="col-sm-8 p-l-0">
                 <textarea ng-model="event_info.food_request_details"
-                          ng-class="{'hide' : !event_info.food_request}" 
+                          ng-class="{'hide' : !event_info.food_request}"
                           name="request_for_food_instruction" id=""
                           placeholder="Included are healthy drinks and snacks from Whole Foods and Trader Joes.  Upon request we can order from Urth Cafe, Peet's Coffee, and Shoop's Deli. The cost will be billed back to the production."
                           rows="6" class="form-control"></textarea>

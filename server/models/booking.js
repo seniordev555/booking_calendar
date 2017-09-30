@@ -42,6 +42,7 @@ var BookingSchema = new Schema({
     food_request: Boolean,
     food_request_details: String,
     estimate: Number,
+    purchase_number: String,
     personnel: {
         adr_mixer: {
             type: Schema.Types.ObjectId,
@@ -86,15 +87,15 @@ var BookingSchema = new Schema({
 }, {'collection': 'bookings', versionKey: false});
 
 BookingSchema.static('hasBooking', function (timeIn, timeOut, exceptId, callback) {
-    
+
     if ("Date" != typeof timeIn) {
         timeIn = new Date(timeIn);
     }
-    
+
     if ("Date" != typeof timeOut) {
         timeOut = new Date(timeOut);
     }
-    
+
     var query = {
         "booking_status": "Book",
         "$or": [
@@ -103,7 +104,7 @@ BookingSchema.static('hasBooking', function (timeIn, timeOut, exceptId, callback
             {"time_in": {"$lte": timeIn}, "time_out": {"$gte": timeOut}}
         ]
     };
-    
+
     if ( exceptId && "string" == typeof exceptId) {
         query._id = {
             "$ne": new mongoose.Types.ObjectId(exceptId)
@@ -113,14 +114,14 @@ BookingSchema.static('hasBooking', function (timeIn, timeOut, exceptId, callback
             "$ne": exceptId
         };
     }
-    
+
     this.count(query, function (err, count) {
         callback( count > 0 );
     });
 });
 
 BookingSchema.method("canUpdate", function (user) {
-    
+
     if (this.isOwner(user) || this.isShared(user)) {
         var today = new Date();
         today.setHours(0,0,0,0);
@@ -128,8 +129,8 @@ BookingSchema.method("canUpdate", function (user) {
             return true;
         }
     }
-    
-    return user.isAdmin(); 
+
+    return user.isAdmin();
 });
 
 // check user can remove the booking
@@ -152,14 +153,14 @@ BookingSchema.method("isShared", function (user) {
 BookingSchema.method('shareToUsers', function (userIds, callback) {
     var User = this.model('User');
     var booking = this;
-    
+
     User.find({"_id": {"$in": userIds}}, function (err, users) {
         var validUserIds = _.map(users, "_id");
         var addUserIds = booking.personnel.shared_users.addToSet.apply(booking.personnel.shared_users, validUserIds);
-        
+
         booking.save(function (err) {
             User.find({"_id": {"$in": addUserIds}}, function (err, addUsers) {
-               callback(err, addUsers); 
+               callback(err, addUsers);
             });
         });
     });
