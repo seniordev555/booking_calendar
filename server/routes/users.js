@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model("User");
 var Booking = mongoose.model("Booking");
@@ -14,8 +15,14 @@ router.get('/', function(req, res, next) {
 var listAdrMixer = function (req, res, next) {
     // find all adr mixer
     User.find({"isAdrMixer": true}, function (err, users) {
+        formatted_users = _.map(users, function(user) {
+            if (!user.fullname) {
+                user.fullname = user.email.substr(0, user.email.indexOf("@"))
+            }
+            return user;
+        })
         res.json({
-            "data": users
+            "data": formatted_users
         });
     });
 };
@@ -23,7 +30,7 @@ var listAdrMixer = function (req, res, next) {
 function searchUser(req, res) {
     var searchKey = req.query.field || '_id';
     var searchValue = req.query.value || '';
-    
+
     if (searchKey && searchValue) {
         var filters = {};
         filters[searchKey] = new RegExp("^" + searchValue);
@@ -33,11 +40,11 @@ function searchUser(req, res) {
             });
         });
     }
-    
+
     return res.json({
         "data": []
     });
-    
+
 }
 
 function getUserSettings(req, res) {
@@ -50,9 +57,9 @@ function getUserSettings(req, res) {
         }
         return res.json({
             "data": setting
-        });  
+        });
     })
-    
+
 }
 
 function setUserSettings(req, res) {
@@ -69,7 +76,7 @@ function setUserSettings(req, res) {
             setting.save(function () {
                 return res.json({
                     "success": true
-                });  
+                });
             })
         } else {
             UserSetting.create({

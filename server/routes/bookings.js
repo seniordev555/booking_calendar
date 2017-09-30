@@ -16,6 +16,7 @@ var BookingMailer = require('../helpers/booking-mailer');
 var sendMailForSharedUsers = BookingMailer.sendMailForSharedUsers;
 var sendEmailConfirmationToOwner = BookingMailer.sendEmailConfirmationToOwner;
 var sendEmailUpdateBooking = BookingMailer.sendEmailUpdateBooking;
+var sendEmailDeleteBooking = BookingMailer.sendEmailDeleteBooking;
 
 function createNewBooking(data, callback)
 {
@@ -29,15 +30,15 @@ function createNewBooking(data, callback)
         if (err && err.errors) {
             callback({error: err.errors});
         }
-        
+
         sendEmailConfirmationToOwner(booking, function () {
-            callback(null, booking); 
+            callback(null, booking);
         });
     });
 }
 
 function transformSingleBooking(booking, user)
-{   
+{
     if (!user || ! booking.canUpdate(user) ) {
         return {
             "_id": booking._id,
@@ -51,7 +52,7 @@ function transformSingleBooking(booking, user)
             "can_update": false
         };
     }
-    
+
     var data = booking.toJSON();
     data.can_update = booking.canUpdate(user);
     return data;
@@ -59,20 +60,20 @@ function transformSingleBooking(booking, user)
 
 // send email to booking's partners
 function shareBooking(req, booking, userIds, emails, callback)
-{   
+{
     function shareWithUsers(userIds, shareUsersDoneCb) {
         User.find({"_id": {"$in": userIds}}, function (err, users) {
             // Find new shared users
             var addedUsers =  _.filter(users, function (user) {
                 return ! booking.isShared(user);
             });
-            
+
             booking.shareToUsers(addedUsers, function () {
                 sendMailForSharedUsers(addedUsers, booking, shareUsersDoneCb);
             });
         });
     }
-    
+
     function shareWithEmails(emails, sharedEmailDoneCb) {
         // create empty users.
         var newUserIds = [];
@@ -80,7 +81,7 @@ function shareBooking(req, booking, userIds, emails, callback)
             if ( ! validator.isEmail(email) ) {
                 return nextEmailCb();
             }
-            
+
             User.create({
                 "email": email,
                 "isEmpty": true
@@ -96,40 +97,40 @@ function shareBooking(req, booking, userIds, emails, callback)
             });
         });
     }
-    
+
     async.series({
         "shareWithUsers": function (next) {
             shareWithUsers(userIds, next);
-        }, 
+        },
         "shareWithEmails": function (next) {
             shareWithEmails(emails, next);
-        } 
+        }
     }, function () {
         callback();
     });
 }
 
 function create(req, res){
-    
+
     Booking.hasBooking(req.body.time_in, req.body.time_out, null, function (hasBooking) {
         if (hasBooking && 'Book' == req.body.booking_status ) {
             return res.status(400).json({
                 error: "The time you have attempted to book has already been confirmed by another client, please choose another time."
             });
         }
-        
+
         var data = req.body;
         data.user = {
             id: req.user.id
         };
-        
+
         // We handled share users in another flow.
         var sharedUsers = [];
         if (data.personnel && data.personnel.shared_users) {
             sharedUsers = data.personnel.shared_users;
             delete data.personnel.shared_users;
         }
-        
+
         createNewBooking(data , function (err, booking) {
             if (err) {
                 return res.status(400).json(err);
@@ -147,7 +148,7 @@ function create(req, res){
                 if (!req.body.personnel || ( ! sharedUsers.length && ! req.body.personnel.shared_emails) ) {
                     return res.json(data);
                 }
-                
+
                 var emails = req.body.personnel.shared_emails || [];
                 shareBooking(req, booking, sharedUsers, emails, function () {
                     booking
@@ -161,13 +162,13 @@ function create(req, res){
             });
         });
     });
-    
+
 }
 
 /**
  * Admin can update all booking without time constraint
  * Owner can update his own booking except booking in the past
- * 
+ *
  * @param {object} req
  * @param {object} res
  * @returns {object}
@@ -179,23 +180,23 @@ function update(req, res) {
             logger.info(err);
             return err;
         }
-        
+
         if (!booking) {
             return res.status(404).send();
         }
-        
+
         var canUpdate = booking.canUpdate(req.user);
         if (!canUpdate) {
             return res.status(403).send();
         }
-        
+
         Booking.hasBooking(req.body.time_in, req.body.time_out, id, function (hasBooking) {
             if (hasBooking && 'Book' == req.body.booking_status ) {
                 return res.status(400).json({
                     error: "The time is not availabe"
                 });
             }
-            
+
             var data = req.body;
             // We handled share users in another flow.
             var sharedUsers = [];
@@ -207,7 +208,7 @@ function update(req, res) {
             if (req.body.actors_name) {
                 booking.actors_name = req.body.actors_name;
             }
-            
+
             async.series({
                 "saveBooking": function (next) {
                     booking.save(function (err) {
@@ -229,7 +230,7 @@ function update(req, res) {
                 if (err) {
                     return res.status(500).send();
                 }
-                
+
                 booking
                 .populate("personnel.adr_mixer")
                 .populate("owner", "_id profilePhoto profileUrl")
@@ -243,7 +244,7 @@ function update(req, res) {
 }
 
 function list(req, res) {
-    
+
     var ownerFields = "_id";
     var isAdmin = (req.user && req.user.isAdmin()) ? true : false;
     var isUser = (req.user && ! req.user.isAdmin()) ? true : false;
@@ -260,33 +261,33 @@ function list(req, res) {
     var isViewPastBooking = false;
     var filters = {};
     var now = new Date();
-    
+
     if (hasUser) {
         ownerFields = "profileUrl profilePhoto _id";
     }
-    
+
     if (end) {
         if (isWeekChecking) {
             var firstDayOfEndDateWeek = moment(end).startOf("week");
             // Should add 1 second on current week for better results
-            isViewPastBooking = firstDayOnCurrentWeek.add(1, "seconds").isAfter(firstDayOfEndDateWeek);    
+            isViewPastBooking = firstDayOnCurrentWeek.add(1, "seconds").isAfter(firstDayOfEndDateWeek);
         } else {
             isViewPastBooking = moment().add(1, "seconds").isAfter(moment(end));
-        }        
+        }
     }
-    
+
     // Guest are not allowed to view historical.
     // Request with start date & end date in historical
     if (isViewPastBooking && isGuest) {
         return res.json({"data": []});
     }
-    
+
     // Request with start date < current < end date
-    // Guest can't see bookings in historical    
+    // Guest can't see bookings in historical
     if ( isGuest && isWeekChecking && moment(now).isAfter(start) && moment(now).isBefore(end)) {
         start = now;
     }
-    
+
     if (start && end) {
         filters = { '$or': [
                 {
@@ -320,7 +321,7 @@ function list(req, res) {
             ]
         }
     }
-    
+
     if (isUser) {
         // User only can view their owned bookings in history
         if (isViewPastBooking) {
@@ -343,23 +344,23 @@ function list(req, res) {
     } else if (isGuest) {
         filters.booking_status = "Book";
     }
-    
+
     Booking.find(filters)
     .populate("owner", ownerFields)
     .populate("personnel.shared_users", "_id email fullname profilePhoto profileUrl")
     .populate("personnel.adr_mixer", "_id email fullname profilePhoto")
     .exec(function(err, results){
-        
+
         if (err) {
             logger.info(err);
             return err;
         }
-        
+
         var data = [];
         results.forEach(function (booking) {
             data.push(transformSingleBooking(booking, req.user));
         })
-        
+
         res.json({
             data: data,
         });
@@ -368,7 +369,9 @@ function list(req, res) {
 
 function remove (req, res) {
     var id = req.params.id;
-    Booking.findById(id, function(err, booking){
+    Booking.findById(id)
+    .populate("owner personnel.adr_mixer personnel.shared_users")
+    .exec(function(err, booking){
         if (err) {
             logger.info(err);
             return err;
@@ -383,20 +386,20 @@ function remove (req, res) {
             return res.status(403).send();
         }
         booking.remove(function (err, results) {
-
             if (err) {
                 logger.info(err);
                 return err;
             }
-
-            res.json({"success": true});
+            sendEmailDeleteBooking(booking, function() {
+                res.json({"success": true});
+            });
         });
     });
 }
 
 function singleBooking (req, res) {
     var id = req.params.id;
-    
+
     Booking.findById(id)
     .populate("owner", 'profileUrl profilePhoto _id')
     .populate("personnel.shared_users", "_id email fullname profilePhoto")
@@ -406,11 +409,11 @@ function singleBooking (req, res) {
             logger.info(err);
             return err;
         }
-        
+
         if (!booking) {
             return res.status(404).send();
         }
-        
+
         res.json(transformSingleBooking(booking, req.user));
     });
 }
@@ -426,19 +429,19 @@ function listRecentAdrMixers(req, res) {
             bookings.forEach(function (booking) {
                 recentAdrMixerIds.push(booking.personnel.adr_mixer);
             });
-            
+
             recentAdrMixerIds = _.uniq(recentAdrMixerIds);
-            
+
             if ( _.isEmpty(recentAdrMixerIds)) {
                 return callback([]);
             }
-            
+
             User.find({"_id": {"$in": recentAdrMixerIds}}, function (err, mixers) {
                 callback(mixers);
             });
         });
     };
-    
+
     // Admin User
     if (req.user && req.user.isAdmin() && req.query.booking_id) {
         Booking.findById(req.query.booking_id, function (err, booking) {
