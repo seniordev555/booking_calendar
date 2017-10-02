@@ -193,7 +193,7 @@ function update(req, res) {
         Booking.hasBooking(req.body.time_in, req.body.time_out, id, function (hasBooking) {
             if (hasBooking && 'Book' == req.body.booking_status ) {
                 return res.status(400).json({
-                    error: "The time is not availabe"
+                    error: "The time is not available"
                 });
             }
 
