@@ -101,24 +101,6 @@ function updateUser(req, res)
     });
 }
 
-function listSharedUsers(req, res) {
-    var userId = req.user._id.toString();
-    var shared_users = [];
-    Booking.find({ owner: userId }).populate('personnel.shared_users').exec(function(err, bookings) {
-        if (!err) {
-            _.each(bookings, function(booking) {
-                _.each(booking.personnel.shared_users, function(user) {
-                    shared_users.push(user)
-                });
-            });
-            shared_users = _.union(shared_users, 'email');
-        }
-        res.json({
-            data: shared_users
-        });
-    });
-}
-
 router.get('/search', searchUser);
 
 router.get('/adr-mixers', listAdrMixer);
@@ -128,7 +110,5 @@ router.get('/settings', isLoggedIn, getUserSettings);
 router.put('/settings', isLoggedIn, setUserSettings);
 
 router.put('/me', isLoggedIn, updateUser);
-
-router.get('/shared-users', isLoggedIn, listSharedUsers);
 
 module.exports = router;

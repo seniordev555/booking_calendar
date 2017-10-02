@@ -44,7 +44,7 @@ function personnelCtrl($scope, currentUser, $http, RegExp) {
     }
 
     function getSharedUsers() {
-        $http.get(TXP.serverUrl + "users/shared-users").then(function (successResponse) {
+        $http.get(TXP.serverUrl + "api/bookings/shared-users").then(function (successResponse) {
             if (successResponse.data && successResponse.data.data) {
                 var data = successResponse.data.data;
                 data.forEach(function(user) {
