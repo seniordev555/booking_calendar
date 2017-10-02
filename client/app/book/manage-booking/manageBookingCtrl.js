@@ -5,7 +5,7 @@ angular.module('newApp').controller('manageBookingCtrl', manageBookingCtrl);
 manageBookingCtrl.$inject = ['$scope', 'currentUser', '$http', 'timeUtil', 'calendarUtil', '$compile', '$rootScope', 'LaddaLoadingService']
 
 function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, $compile, $rootScope, LaddaLoadingService) {
-    var $modal = $('#booking-modal');    
+    var $modal = $('#booking-modal');
     var editEvent;
     var isAdmin = currentUser.hasRole('admin');
     var calendar;
@@ -22,7 +22,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
     $scope.bookingFormOnLoad = bookingFormOnLoad;
     $scope.openRemoveBookingModal = openRemoveBookingModal;
     $scope.manageBookingTabTemplateLoaded = manageBookingTabTemplateLoaded;
-    
+
     function reset() {
         $scope.start = "";
         $scope.end = "";
@@ -30,6 +30,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
         $scope.time_out = "";
         $scope.submitting = false;
         $scope.error = false;
+        $scope.post_production_coordinators = [];
         $scope.event_info = {
             actors: [],
             event_logs: [],
@@ -41,6 +42,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
 
     $scope.$on('event-modal-open', function(angularEvent, angularEventParams){
         manageBookingTabTemplateLoaded();
+        init();
         $.validator.addMethod("validDate", function(value, element) {
             return this.optional(element) || timeUtil.convertClientDateToMoment(value).isValid();
         }, "Please provide the valid time!");
@@ -49,14 +51,14 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
         }, 100);
         if (angularEventParams.start) {
             $scope.start = angularEventParams.start;
-            $scope.time_in = timeUtil.formatDateClient(angularEventParams.start);            
+            $scope.time_in = timeUtil.formatDateClient(angularEventParams.start);
         }
-        
+
         if (angularEventParams.end) {
-            $scope.end = angularEventParams.end;            
-            $scope.time_out = timeUtil.formatDateClient(angularEventParams.end);            
+            $scope.end = angularEventParams.end;
+            $scope.time_out = timeUtil.formatDateClient(angularEventParams.end);
         }
-        
+
         if (angularEventParams.booking_status) {
             $scope.event_info.booking_status = angularEventParams.booking_status;
             $modal.find('select[name=booking_status]').prop("disabled", "disabled");
@@ -65,7 +67,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
         else {
             $modal.find('select[name=booking_status]').prop("disabled", false);
         }
-        
+
         $scope.isAddNew = angularEventParams.isAddNew;
         $scope.profilePhoto = angularEventParams.loggedInUserProfilePhoto
         $scope.profileUrl = angularEventParams.loggedInUserProfileUrl
@@ -83,12 +85,12 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             }
             if (editEvent.more_info.owner && editEvent.more_info.owner.profilePhoto) {
                 $scope.profilePhoto = editEvent.more_info.owner.profilePhoto;
-            }            
+            }
         }
         if (angularEventParams.calendar) {
             calendar = angularEventParams.calendar;
         }
-        
+
         //add an empty row for actors list
         if ($scope.event_info.actors) {
             var actors = $scope.event_info.actors;
@@ -110,7 +112,32 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             }
         }
     });
-    
+
+    function init() {
+        getPostProductionCoordinators();
+    }
+
+    function getPostProductionCoordinators() {
+        $http.get(TXP.serverUrl + "api/bookings/" + $scope.event_info._id + "/post-prod-coordinators").then(function (successResponse) {
+            if (successResponse.data && successResponse.data.data) {
+                var data = successResponse.data.data;
+                $scope.post_production_coordinators = data;
+            }
+        });
+    }
+
+    $scope.selectPostProdCoordinator = function(person) {
+        if (person != '') {
+            $scope.event_info.post_production_name = person.post_production_name;
+            $scope.event_info.post_production_phone = person.post_production_phone;
+            $scope.event_info.post_production_email = person.post_production_email;
+        } else {
+            $scope.event_info.post_production_name = '';
+            $scope.event_info.post_production_phone = '';
+            $scope.event_info.post_production_email = '';
+        }
+    }
+
     function setInputActors() {
         setInputColorFollowingStatus();
         $(".actor-start-time").timepicker();
@@ -134,7 +161,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             $(this).popover('hide');
         });
     }
-    
+
     function getActorTime (actors) {
         var timeInputs = $("[name='actor_start_time[]']");
         for (var i = 0; i < actors.length; i++) {
@@ -149,16 +176,16 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             start_time: ""
         });
     }
-    
+
     function removeActor(index) {
         var actors = $scope.event_info.actors;
         actors.splice(index, 1);
     };
-    
+
     function cancelRemoveActor() {
         $("[rel=popover]").popover('hide');
     };
-    
+
     function bookingFormOnLoad() {
         var validator = $modal.find('form').validate({
             success: "valid",
@@ -209,7 +236,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
                 }
             }
         });
-        
+
         $modal.on('hidden.bs.modal', function(){
             reset();
             validator.resetForm();
@@ -287,7 +314,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
 
         // Create a new instance of ladda for the specified button
         var loading = LaddaLoadingService.startLoadingButton(".submit-button");
-        
+
         var notificationOptions = {
             text: '<div class="alert alert-success bg-primary media fade in m-0">You have created successfully!</div>',
             animation: {
@@ -358,11 +385,11 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             });
         }
     }
-    
+
     function openRemoveBookingModal(event) {
         $("#remove-booking-modal").modal();
     };
-    
+
     function manageBookingTabTemplateLoaded() {
         var datetimepickerOptions = {
             dateFormat: 'D, dd/mm/yy',
@@ -384,7 +411,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             $scope.time_out = $(e.target).val();
         });
     };
-    
+
     function setInputColorFollowingStatus() {
         var selectedStatus = $scope.event_info.booking_status;
         if (selectedStatus == 'Hold') {
