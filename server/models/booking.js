@@ -29,6 +29,8 @@ var BookingSchema = new Schema({
             start_time: String,
             description: String,
             end_time: String,
+            rate: Number,
+            setup_fee: Number,
             is_billed: Boolean
         }
     ],

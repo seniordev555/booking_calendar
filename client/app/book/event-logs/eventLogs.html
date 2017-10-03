@@ -70,7 +70,7 @@
                         </button>
                     </div>
                     <div ng-show="eventLogs.isEndedEventLog[$index]">
-                        <input 
+                        <input
                             ng-model="eventLogs.booking.event_logs[$index].end_time"
                             name="end_time"
                             type="text" placeholder="Time MM-DD HH:mm PM"
@@ -97,6 +97,20 @@
                        title="Remove Log">
                         <i class="icons-office-52" ng-class="{'c-red': removeEventLogButtonsHover, 'text-muted': !removeEventLogButtonsHover}"></i>
                     </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 p-r-0">
+                    <label class="m-b-0">Rate</label>
+                    <input ng-model="eventLogs.booking.event_logs[$index].rate"
+                           type="number" placeholder="Rate"
+                           class="form-control input-sm" id="event-log-rate-{{$index}}">
+                </div>
+                <div class="col-sm-2 p-r-0 p-l-5">
+                    <label class="m-b-0">Setup Fee</label>
+                    <input ng-model="eventLogs.booking.event_logs[$index].setup_fee"
+                           type="number" placeholder="Setup Fee"
+                           class="form-control input-sm" id="event-log-setup-fee-{{$index}}">
                 </div>
             </div>
             <div class="row">
@@ -151,6 +165,36 @@
                 <button type="button" ng-click="eventLogs.addCharge()" class="btn btn-sm btn-square m-0">
                     <span class="text-muted">Add charges</span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary m-t-20">
+        <div class="row">
+            <div class="col-sm-12">
+                <hr class="m-b-5 m-t-5">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-offset-7 col-sm-5">
+                <div class="row p-t-5">
+                    <div class="col-sm-8"><strong>Sub Total</strong> (Total Hours: {{totalHours()}} hrs):</div>
+                    <div class="col-sm-4">{{subTotal() | currency: "USD $"}}</div>
+                </div>
+                <div class="row p-t-5">
+                    <div class="col-sm-8"><strong>Additional Charges:</strong></div>
+                    <div class="col-sm-4">{{additionalCharges() | currency: "USD $"}}</div>
+                </div>
+                <div class="row p-t-5">
+                    <div class="col-sm-12">
+                        <hr class="m-b-5 m-t-5">
+                    </div>
+                </div>
+                <div class="row p-t-5">
+                    <div class="col-sm-8"><strong>Total:</strong></div>
+                    <div class="col-sm-4">{{totalCharges() | currency: "USD $"}}</div>
+                </div>
             </div>
         </div>
     </div>
