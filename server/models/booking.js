@@ -85,6 +85,14 @@ var BookingSchema = new Schema({
     billing: {
         billing_address: String,
         contact_details: String
+    },
+    created_at: {
+      type: Date,
+      default: Date.now
+    },
+    updated_at: {
+      type: Date,
+      default: Date.now
     }
 }, {'collection': 'bookings', versionKey: false});
 
@@ -166,6 +174,11 @@ BookingSchema.method('shareToUsers', function (userIds, callback) {
             });
         });
     });
+});
+
+BookingSchema.pre('save', function(next) {
+  this.updated_at = new Date();
+  next();
 });
 
 mongoose.model('Booking', BookingSchema);

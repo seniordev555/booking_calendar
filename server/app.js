@@ -43,7 +43,7 @@ app.use(session({
     store: new MongoStore({
         mongooseConnection: mongoose.connection
     }),
-    cookie: { 
+    cookie: {
         maxAge: lifetime * minute
     }
 }));

@@ -89,6 +89,44 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             calendar = angularEventParams.calendar;
         }
 
+        if ($scope.isAddNew) getLastBooking();
+        else manageActors();
+    });
+
+    function getLastBooking() {
+        $http.get(TXP.serverUrl + "api/bookings/last-booking").then(function (successResponse) {
+            if (successResponse.data && successResponse.data.data) {
+                var data = successResponse.data.data;
+                $rootScope.$broadcast('booking.last_booking_received', { data: data });
+            }
+        });
+    }
+
+    $scope.$on('booking.last_booking_received', function(event, args) {
+        var data = args.data;
+        if (data) {
+            $scope.event_info.production = data.production;
+            $scope.event_info.post_production_name = data.post_production_name || '';
+            $scope.event_info.post_production_phone = data.post_production_phone || '';
+            $scope.event_info.post_production_email = data.post_production_email || '';
+            $scope.event_info.billing = data.billing || {}
+            $scope.event_info.actors = data.actors || [];
+            if (data.technical_specifications) {
+                var new_spec = {}, past_spec = angular.copy(data.technical_specifications);
+                new_spec.sample_rate = past_spec.sample_rate;
+                new_spec.frame_rate = past_spec.frame_rate;
+                new_spec.preferred_microphones_boom = past_spec.preferred_microphones_boom;
+                new_spec.lavalier = past_spec.lavalier;
+                new_spec.instructions = past_spec.instructions;
+                new_spec.local_or_remote_actor_and_director = 'local_actor_director';
+                $scope.event_info.technical_specifications = new_spec;
+            }
+            manageActors();
+            setInputActors();
+        }
+    });
+
+    function manageActors() {
         //add an empty row for actors list
         if ($scope.event_info.actors) {
             var actors = $scope.event_info.actors;
@@ -109,7 +147,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
                 plusOneActor(actors);
             }
         }
-    });
+    }
 
     function setInputActors() {
         setInputColorFollowingStatus();

@@ -42,6 +42,16 @@ function personnelCtrl($scope, currentUser, $http, RegExp) {
         });
     }
 
+    $scope.$on('booking.last_booking_received', function(event, args) {
+        var data = args.data;
+        if (data) {
+            data.personnel.shared_users.forEach(function(user) {
+                vm.booking.personnel.shared_emails.splice(0, 0, { id: user._id, value: user.email, shared: false });
+            });
+            setInputColorFollowingStatus();
+        }
+    });
+
     function removeSharedUser($index) {
         vm.booking.personnel.shared_users.splice($index, 1);
     }

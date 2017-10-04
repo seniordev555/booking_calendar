@@ -458,9 +458,24 @@ function listRecentAdrMixers(req, res) {
     }
 }
 
+function getLastBooking(req, res) {
+    var userId = req.user._id;
+    Booking.find({owner: userId}).sort({'created_at': -1}).limit(1).populate('personnel.shared_users').exec(function(err, bookings) {
+        if (err) {
+            return res.json({ data: null });
+        }
+        if ( bookings && bookings.length == 1) {
+            res.json({ data: bookings[0] });
+        } else {
+            res.json({ data: null });
+        }
+    });
+}
+
 router.post('/', isLoggedIn, create);
 router.put('/:id', isLoggedIn, update);
 router.get('/', list);
+router.get('/last-booking', isLoggedIn, getLastBooking);
 router.get('/recent-adr-mixers', isLoggedIn, listRecentAdrMixers);
 router.get('/:id', isLoggedIn, singleBooking);
 router.delete('/:id', isLoggedIn, remove);
