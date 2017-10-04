@@ -458,56 +458,11 @@ function listRecentAdrMixers(req, res) {
     }
 }
 
-function listSharedUsers(req, res) {
-    var userId = req.user._id.toString();
-    var shared_users = [];
-
-    Booking.find({ owner: userId }).populate('personnel.shared_users').exec(function(err, bookings) {
-        if (!err) {
-            _.each(bookings, function(booking) {
-                _.each(booking.personnel.shared_users, function(user) {
-                    shared_users.push(user)
-                });
-            });
-            shared_users = _.unionBy(shared_users, 'email');
-        }
-        res.json({
-            data: shared_users
-        });
-    });
-}
-
-function listPostProdCoordinators(req, res) {
-    var userId = req.user._id.toString();
-    var bookingId = req.params.id;
-    var post_prod_coordinators = [];
-
-    Booking.find({ owner: userId }).exec(function(err, bookings) {
-        if (!err) {
-            _.each(bookings, function(booking) {
-                if (!!booking.post_production_email) {
-                    post_prod_coordinators.push({
-                        post_production_name: booking.post_production_name,
-                        post_production_phone: booking.post_production_phone,
-                        post_production_email: booking.post_production_email
-                    });
-                }
-            });
-            post_prod_coordinators = _.unionBy(post_prod_coordinators, 'post_production_email');
-        }
-        res.json({
-            data: post_prod_coordinators
-        });
-    });
-}
-
 router.post('/', isLoggedIn, create);
 router.put('/:id', isLoggedIn, update);
 router.get('/', list);
-router.get('/shared-users', isLoggedIn, listSharedUsers);
 router.get('/recent-adr-mixers', isLoggedIn, listRecentAdrMixers);
 router.get('/:id', isLoggedIn, singleBooking);
 router.delete('/:id', isLoggedIn, remove);
-router.get('/:id/post-prod-coordinators', isLoggedIn, listPostProdCoordinators);
 
 module.exports = router;

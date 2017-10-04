@@ -30,7 +30,6 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
         $scope.time_out = "";
         $scope.submitting = false;
         $scope.error = false;
-        $scope.post_production_coordinators = [];
         $scope.event_info = {
             actors: [],
             event_logs: [],
@@ -42,7 +41,6 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
 
     $scope.$on('event-modal-open', function(angularEvent, angularEventParams){
         manageBookingTabTemplateLoaded();
-        init();
         $.validator.addMethod("validDate", function(value, element) {
             return this.optional(element) || timeUtil.convertClientDateToMoment(value).isValid();
         }, "Please provide the valid time!");
@@ -112,31 +110,6 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             }
         }
     });
-
-    function init() {
-        getPostProductionCoordinators();
-    }
-
-    function getPostProductionCoordinators() {
-        $http.get(TXP.serverUrl + "api/bookings/" + $scope.event_info._id + "/post-prod-coordinators").then(function (successResponse) {
-            if (successResponse.data && successResponse.data.data) {
-                var data = successResponse.data.data;
-                $scope.post_production_coordinators = data;
-            }
-        });
-    }
-
-    $scope.selectPostProdCoordinator = function(person) {
-        if (person != '') {
-            $scope.event_info.post_production_name = person.post_production_name;
-            $scope.event_info.post_production_phone = person.post_production_phone;
-            $scope.event_info.post_production_email = person.post_production_email;
-        } else {
-            $scope.event_info.post_production_name = '';
-            $scope.event_info.post_production_phone = '';
-            $scope.event_info.post_production_email = '';
-        }
-    }
 
     function setInputActors() {
         setInputColorFollowingStatus();

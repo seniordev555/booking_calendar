@@ -81,14 +81,6 @@
             <label class='control-label col-sm-2'>Post-Production Coordinator</label>
             <div class="col-sm-10">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <select class="form-control m-b-15" name="post_production_coordinator" ng-if="post_production_coordinators.length > 0">
-                            <option value="" ng-selected="!!event_info.post_production_email" ng-click="selectPostProdCoordinator('')">Select post production coordinator...</option>
-                            <option ng-repeat="person in post_production_coordinators" ng-value="person" ng-click="selectPostProdCoordinator(person)" ng-selected="person.post_production_email == event_info.post_production_email">{{person.post_production_name}} - <{{person.post_production_email}}></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-sm-4 p-r-0">
                         <input ng-model="event_info.post_production_name" class='form-control' placeholder='Name' type='text' name='post_production_name'/>
                     </div>

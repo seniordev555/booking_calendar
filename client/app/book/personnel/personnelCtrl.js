@@ -31,7 +31,6 @@ function personnelCtrl($scope, currentUser, $http, RegExp) {
 
     function init() {
         getAdrMixers();
-        getSharedUsers();
     }
 
     function getAdrMixers() {
@@ -39,23 +38,6 @@ function personnelCtrl($scope, currentUser, $http, RegExp) {
             if (successResponse.data && successResponse.data.data) {
                 var data = successResponse.data.data;
                 vm.data.adr_mixers = data;
-            }
-        });
-    }
-
-    function getSharedUsers() {
-        $http.get(TXP.serverUrl + "api/bookings/shared-users").then(function (successResponse) {
-            if (successResponse.data && successResponse.data.data) {
-                var data = successResponse.data.data;
-                data.forEach(function(user) {
-                    var filtered = vm.booking.personnel.shared_users.filter(function (shared_user) {
-                        return shared_user.email == user.email;
-                    });
-                    if (filtered.length == 0) {
-                        vm.booking.personnel.shared_emails.splice(0, 0, { id: user._id, value: user.email, shared: false });
-                    }
-                });
-                setInputColorFollowingStatus();
             }
         });
     }
