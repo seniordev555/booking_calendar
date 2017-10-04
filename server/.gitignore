@@ -1,3 +1,5 @@
 node_modules
 config/development.json
 info.log
+config/production.json
+run_server.sh
