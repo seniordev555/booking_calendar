@@ -471,4 +471,10 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             }).trigger("keyup");
         });
     }
+
+    $scope.openProfile = function() {
+        if(!!$scope.profileUrl && $scope.profileUrl != '#') {
+            window.open( $scope.profileUrl, '_blank' );
+        }
+    }
 }
