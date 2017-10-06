@@ -35,6 +35,16 @@ function EventLogsCtrl ($scope, currentUser) {
         }
     });
 
+    $scope.$on('booking.last_booking_received', function(event, args) {
+        var data = args.data;
+        if (data) {
+            if (data.event_logs.length > 0) {
+                $scope.last_rate = data.event_logs[data.event_logs.length - 1].rate;
+                $scope.last_setup_fee = data.event_logs[data.event_logs.length - 1].setup_fee;
+            }
+        }
+    });
+
     function startEventLog() {
         eventLogs.isAddingEventLog = true;
         if (!eventLogs.isAdmin) {
@@ -69,8 +79,8 @@ function EventLogsCtrl ($scope, currentUser) {
             start_time: moment().format("MM-DD HH:mm A"),
             end_time: "",
             description: "",
-            rate: '',
-            setup_fee: '',
+            rate: $scope.last_rate || 300,
+            setup_fee: $scope.last_setup_fee || 100,
             is_billed: true
         };
     }
