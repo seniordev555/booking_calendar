@@ -1,7 +1,7 @@
-
 'use strict';
 
 var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -40,7 +40,7 @@ var roleValidationFailedMsg = "The {PATH} field does not exist in " + validRoles
 UserSchema.path('role').validate({"validator": roleValidator, "msg": roleValidationFailedMsg});
 
 
-UserSchema.method('isAdmin', function () { 
+UserSchema.method('isAdmin', function () {
     return 'admin' == this.get("role");
 });
 
@@ -67,4 +67,5 @@ UserSchema.static('findBySocialId', function (socialType, socialId, callback) {
     return this.findOne({"profileType": socialType, "profileId": socialId}, callback);
 });
 
-mongoose.model('User', UserSchema);
+UserSchema.plugin(mongoosePaginate);
+module.exports = mongoose.model('User', UserSchema);

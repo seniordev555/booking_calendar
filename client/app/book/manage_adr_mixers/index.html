@@ -1,0 +1,78 @@
+<div class="loading-wrapper" ng-if="isLoading">
+  <div class="icon">
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<form ng-submit="submitForm()">
+  <div class="m-b-10"><strong>Filters</strong></div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-search"></i>
+          </div>
+          <input type="text" class="form-control input-sm" id="search" ng-model="pagination.q" placeholder="Enter a search string..." />
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <select ng-model="pagination.role" class="form-control input-sm" ng-change="submitForm()">
+          <option value="">All</option>
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label class="input-sm">
+          <input icheck ng-model="pagination.isAdrMixer" data-checkbox="icheckbox_square-blue" value="{{pagination.isAdrMixer}}" type="checkbox" ng-change="submitForm()" /> Only ADR Mixers?
+        </label>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="table-responsive" ng-if="users.length > 0">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>ADR Mixer</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in users track by $index">
+            <td><img ng-src="{{user.profilePhoto}}" class="img-circle" width="36" height="36" /></td>
+            <td>{{user.fullname}}</td>
+            <td>{{user.email}}</td>
+            <td class="text-uppercase">{{user.role}}</td>
+            <td>
+              <label class="m-b-0">
+                <input ng-model="user.isAdrMixer"
+                       ng-change="updateUser($index)"
+                       icheck data-checkbox="icheckbox_square-blue"
+                       value='{{user.isAdrMixer}}' type='checkbox' />
+              </label>
+            </td>
+            <td>%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warning" ng-if="users.length == 0">
+      There is no users.
+    </div>
+    <div class="pagination2">
+      <ul uib-pagination total-items="pagination.total" ng-change="pageChanged()" ng-model="pagination.page" items-per-page="{{pagination.limit}}" max-size="5" class="pagination-sm" boundary-links="true" ng-if="pagination.pages > 1" rotate="false"></ul>
+    </div>
+  </div>
+</div>

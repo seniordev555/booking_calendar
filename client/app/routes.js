@@ -1,4 +1,4 @@
-/* 
+/*
  * All app routes here
  */
 angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
@@ -7,7 +7,7 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
         var $state = $injector.get("$state");
         $state.go('bookingOnCalendar');
     });
-    
+
     $stateProvider.state('admin', {
         abstract: true,
         //we don't need url
@@ -37,7 +37,7 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
                 });
 
                 return deferred.promise;
-            }]            
+            }]
         }
     })
     .state('bookingOnCalendar', {
@@ -45,7 +45,7 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
         url: "/booking/:b_id",
         templateUrl: "./app/book/calendar.html",
         controller: "calendarCtrl",
-        data: { 
+        data: {
             pageTitle: 'Booking', bodyClass: 'sidebar-top  theme-sdtl bg-light-dark color-primary'
 //            permissions: {
 //                except: ['anonymous'], redirectTo: 'login'
@@ -62,7 +62,8 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
                             './app/book/personnel/personnelCtrl.js',
                             './app/book/manage-booking/manageBookingCtrl.js',
                             './app/book/billing/billingCtrl.js',
-                            './app/book/technical-specifications/technicalSpecificationsCtrl.js'
+                            './app/book/technical-specifications/technicalSpecificationsCtrl.js',
+                            './app/book/manage_adr_mixers/controller.js'
                         ]
                     }
                 ]);
@@ -113,7 +114,7 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
         url: "/login",
         templateUrl: "./app/login/login.html",
         controller: "loginCtrl",
-        data: { 
+        data: {
             pageTitle: 'Log in - Sign in', bodyClass: 'account separate-inputs'
 //            permissions: {
 //                except: ['anonymous'], redirectTo: 'login'
@@ -141,7 +142,7 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: "./app/book/sharing/sharing.html",
         controller: "sharingCtrl",
         controllerAs: "sharing",
-        data: { 
+        data: {
             // pageTitle: 'Log in - Sign in', bodyClass: 'account separate-inputs'
             // permissions: {
             //    except: ['anonymous'], redirectTo: 'login'
@@ -159,6 +160,6 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
                 ]);
             }
         }
-    })    
-    ; 
+    })
+    ;
 });

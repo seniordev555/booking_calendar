@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www.js",
-    "dev": "sudo NODE_ENV=development PORT=80 node ./bin/www.js"
+    "dev": "NODE_ENV=development PORT=5000 node ./bin/www.js"
   },
   "dependencies": {
     "async": "^1.5.0",
@@ -23,6 +23,7 @@
     "moment": "^2.11.2",
     "mongodb-migrations": "^0.8.5",
     "mongoose": "~4.3.4",
+    "mongoose-paginate": "^5.0.3",
     "nodemailer": "^2.1.0",
     "passport": "0.3.2",
     "passport-facebook": "2.0.0",

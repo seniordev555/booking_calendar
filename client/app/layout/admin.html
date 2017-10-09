@@ -15,7 +15,7 @@
                 <div class="header-right">
                     <ul class="header-menu nav navbar-nav">
                         <!-- BEGIN USER DROPDOWN -->
-                        <li class="dropdown" id="user-header" ng-show="!isLoggedIn">                        
+                        <li class="dropdown" id="user-header" ng-show="!isLoggedIn">
                             <a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <span class="icon-user"></span>
                                 <span>&nbsp;&nbsp;Log in</span>
@@ -38,6 +38,9 @@
                                 <span class="username">{{fullname}}</span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li ng-if="isLoggedIn && isAdmin">
+                                    <a data-target="" ng-click="manageAdrMixers()"><i class="icon-users"></i><span>Manage ADR Mixers</span></a>
+                                </li>
                                 <li>
                                     <a data-target="#" ng-click="logout()"><i class="icon-logout"></i><span>Logout</span></a>
                                 </li>

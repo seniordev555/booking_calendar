@@ -11,9 +11,10 @@ var destinationFolder = config.destinationFolder;
 
 require('./app');
 require('./cache');
+require('./less');
 
 // Merge styles and scripts into one file
-gulp.task('index', ['cache'], function () {
+gulp.task('index', ['less', 'cache'], function () {
     var revAll = new RevAll({
         dontRenameFile: [/.html$/]
     });

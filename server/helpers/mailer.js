@@ -26,16 +26,15 @@ Mailer.prototype.send = function(receivers, template, data, callback) {
     });
     var complided = jade.compileFile(path.join(templatePath, 'subject.jade'));
     var subject = complided(data);
-    
+
     sender({
         to: receivers,
-        bcc: 'thirdstreetadr@gmail.com',
         subject: subject
     }, data, function (err, info) {
         callback();
     });
 };
 
-var mailer = new Mailer(transporter); 
+var mailer = new Mailer(transporter);
 // init mailer
 module.exports = mailer;
