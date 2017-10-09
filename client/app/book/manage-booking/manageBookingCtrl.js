@@ -151,7 +151,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
 
     function setInputActors() {
         setInputColorFollowingStatus();
-        $(".actor-start-time").timepicker();
+        $(".actor-start-time").timepicker({ stepMinute: 15 });
         $("[rel=popover]").each(function (index, element) {
             var confirmHtml = '<div><span class="m-b-10">Do you want to remove?</span><br>\n\
                                     <button ng-click="removeActor(' + index + ')" class="btn btn-danger btn-sm m-t-10">Yes</button>\n\
