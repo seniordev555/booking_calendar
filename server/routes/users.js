@@ -110,7 +110,7 @@ var list = function(req, res) {
     if( req.query.is_adr_mixer && (req.query.is_adr_mixer == true || req.query.is_adr_mixer == 'true') ) {
         filter['isAdrMixer'] = true;
     }
-    User.paginate(filter, { page: page, limit: limit, sort: { isAdrMixer: -1, role: 1 } }).then(function(result) {
+    User.paginate(filter, { page: page, limit: limit, sort: { isAdrMixer: -1, role: 1, fullname: 1, email: 1 } }).then(function(result) {
         return res.json({
             data: result
         });
