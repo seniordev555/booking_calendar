@@ -110,7 +110,6 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             $scope.event_info.post_production_phone = data.post_production_phone || '';
             $scope.event_info.post_production_email = data.post_production_email || '';
             $scope.event_info.billing = data.billing || {}
-            $scope.event_info.actors = data.actors || [];
             if (data.technical_specifications) {
                 var new_spec = {}, past_spec = angular.copy(data.technical_specifications);
                 new_spec.sample_rate = past_spec.sample_rate;
@@ -477,4 +476,16 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             window.open( $scope.profileUrl, '_blank' );
         }
     }
+
+    $scope.searchActorsForProduction = function(search_term) {
+        var production = $scope.event_info.production;
+        return $http.get(TXP.serverUrl + 'api/bookings/search-actors', {
+            params: {
+                production: production,
+                name: search_term
+            }
+        }).then(function(response) {
+            return response.data.data;
+        });
+    };
 }

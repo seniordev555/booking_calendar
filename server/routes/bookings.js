@@ -472,11 +472,33 @@ function getLastBooking(req, res) {
     });
 }
 
+var searchActors = function(req, res) {
+  var production = req.query.production || '';
+  var name = req.query.name || '';
+  var userId = req.user._id;
+  var filters = { owner: userId };
+  var actors = [];
+  filters['production'] = new RegExp(production, 'i');
+  filters['actors'] = { $elemMatch: { name: new RegExp(name, 'i') } };
+  Booking.find(filters).sort({ created_at: -1 }).exec(function(err, bookings) {
+    if (err) {
+      return res.json({ data: actors });
+    }
+    bookings.forEach(function(booking) {
+      if (booking.actors && booking.actors.length > 0) {
+        actors = _.union(actors, booking.actors, 'name');
+      }
+    });
+    return res.json({ data: actors });
+  });
+};
+
 router.post('/', isLoggedIn, create);
 router.put('/:id', isLoggedIn, update);
 router.get('/', list);
 router.get('/last-booking', isLoggedIn, getLastBooking);
 router.get('/recent-adr-mixers', isLoggedIn, listRecentAdrMixers);
+router.get('/search-actors', isLoggedIn, searchActors);
 router.get('/:id', isLoggedIn, singleBooking);
 router.delete('/:id', isLoggedIn, remove);
 
