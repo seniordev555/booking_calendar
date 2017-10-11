@@ -142,6 +142,22 @@ var update = function(req, res) {
     });
 };
 
+var destroy = function(req, res) {
+    var userId = req.params.id;
+    User.findOne({ _id: userId }, function(err, user) {
+        if (err) {
+            return res.sendStatus(500);
+        }
+        if (!user) {
+            return res.sendStatus(404);
+        }
+        user.remove(function(err) {
+            if (err) return res.sendStatus(500);
+            return res.sendStatus(204);
+        });
+    });
+};
+
 router.get('/search', searchUser);
 
 router.get('/adr-mixers', listAdrMixer);
@@ -155,5 +171,7 @@ router.put('/me', isLoggedIn, updateUser);
 router.get('/', isLoggedIn, list);
 
 router.put('/:id', isLoggedIn, update);
+
+router.delete('/:id', isLoggedIn, destroy);
 
 module.exports = router;

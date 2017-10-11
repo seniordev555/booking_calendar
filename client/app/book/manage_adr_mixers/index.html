@@ -63,7 +63,9 @@
                        value='{{user.isAdrMixer}}' type='checkbox' />
               </label>
             </td>
-            <td>%</td>
+            <td>
+              <a href="javascript:void(0);" class="text-danger" ng-click="deleteUser($index)"><i class="fa fa-trash"></i></a>
+            </td>
           </tr>
         </tbody>
       </table>

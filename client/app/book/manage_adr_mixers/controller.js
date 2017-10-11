@@ -58,4 +58,33 @@ angular.module('newApp')
       });
     };
 
+    $scope.deleteUser = function(ind) {
+      var user = $scope.users[ind];
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this user!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        $scope.isLoading = true;
+        if (willDelete) {
+          $http.delete(TXP.serverUrl + 'users/' + user._id).then(function (successResponse) {
+            if (successResponse.status == 204) {
+              var query_string = 'q=' + $scope.pagination.q;
+              query_string += '&page=1';
+              query_string += '&limit' + $scope.pagination.limit;
+              query_string += '&role=' + $scope.pagination.role;
+              query_string += '&is_adr_mixer=' + $scope.pagination.isAdrMixer;
+              $scope.getUsers(query_string);
+            } else {
+              $scope.isLoading = false;
+              swal("Error!", "You can't delete this user because of server error.", "error");
+            }
+          });
+        }
+      });
+    };
+
 }]);
