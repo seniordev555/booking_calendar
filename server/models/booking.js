@@ -93,7 +93,8 @@ var BookingSchema = new Schema({
     updated_at: {
       type: Date,
       default: Date.now
-    }
+    },
+    notice: String
 }, {'collection': 'bookings', versionKey: false});
 
 BookingSchema.static('hasBooking', function (timeIn, timeOut, exceptId, callback) {

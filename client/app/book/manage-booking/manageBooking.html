@@ -127,7 +127,7 @@
 </div>
 <div class='row'>
     <div class='col-sm-6'>
-        <div class='form-group m-b-0'>
+        <div class='form-group'>
             <div class="col-sm-4">
                 <label class="control-label">Additional Information</label>
             </div>
@@ -152,6 +152,20 @@
                           name="request_for_food_instruction" id=""
                           placeholder="Included are healthy drinks and snacks from Whole Foods and Trader Joes.  Upon request we can order from Urth Cafe, Peet's Coffee, and Shoop's Deli. The cost will be billed back to the production."
                           rows="6" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group m-b-0">
+            <div class="col-sm-2">
+                <label class="control-label">Notice</label>
+            </div>
+            <div class="col-sm-10">
+                <textarea ng-model="event_info.notice"
+                  class="form-control" name="notice"
+                  rows="2" placeholder="Enter notification of the booking..."></textarea>
             </div>
         </div>
     </div>

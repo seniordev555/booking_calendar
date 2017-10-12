@@ -104,13 +104,13 @@
                     <label class="m-b-0">Rate</label>
                     <input ng-model="eventLogs.booking.event_logs[$index].rate"
                            type="number" placeholder="Rate"
-                           class="form-control input-sm" id="event-log-rate-{{$index}}">
+                           class="form-control input-sm" id="event-log-rate-{{$index}}" step="15">
                 </div>
                 <div class="col-sm-2 p-r-0 p-l-5">
                     <label class="m-b-0">Setup Fee</label>
                     <input ng-model="eventLogs.booking.event_logs[$index].setup_fee"
                            type="number" placeholder="Setup Fee"
-                           class="form-control input-sm" id="event-log-setup-fee-{{$index}}">
+                           class="form-control input-sm" id="event-log-setup-fee-{{$index}}" step="15">
                 </div>
             </div>
             <div class="row">
@@ -147,7 +147,7 @@
                         <div class="col-sm-4 p-l-5">
                             <div class="input-group">
                                 <span class="input-group-addon">USD $</span>
-                                <input ng-model="charge.amount" class="form-control charge-amount input-sm" type="text" placeholder="Charge Amount">
+                                <input ng-model="charge.amount" class="form-control charge-amount input-sm" type="number" placeholder="Charge Amount" step="15">
                             </div>
                         </div>
                     </div>

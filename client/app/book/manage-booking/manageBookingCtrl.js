@@ -109,6 +109,7 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
             $scope.event_info.post_production_name = data.post_production_name || '';
             $scope.event_info.post_production_phone = data.post_production_phone || '';
             $scope.event_info.post_production_email = data.post_production_email || '';
+            $scope.event_info.notice = data.notice || '';
             $scope.event_info.billing = data.billing || {}
             if (data.technical_specifications) {
                 var new_spec = {}, past_spec = angular.copy(data.technical_specifications);
