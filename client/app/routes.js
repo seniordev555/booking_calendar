@@ -63,7 +63,8 @@ angular.module('newApp').config(function($stateProvider, $urlRouterProvider) {
                             './app/book/manage-booking/manageBookingCtrl.js',
                             './app/book/billing/billingCtrl.js',
                             './app/book/technical-specifications/technicalSpecificationsCtrl.js',
-                            './app/book/manage_adr_mixers/controller.js'
+                            './app/book/manage_adr_mixers/controller.js',
+                            './app/book/admin_settings/controller.js'
                         ]
                     }
                 ]);

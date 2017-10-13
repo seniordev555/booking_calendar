@@ -15,7 +15,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('config');
-
+var morgan = require('morgan');
 // require models
 require("./models/user");
 require("./models/booking");
@@ -57,6 +57,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(config.get('clientFolder')));
+
+if(process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 app.use('/', routes);
 app.use('/users', users);

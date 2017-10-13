@@ -39,6 +39,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li ng-if="isLoggedIn && isAdmin">
+                                    <a data-target="" ng-click="openAdminSettings()"><i class="icon-settings"></i><span>Admin Settings</span></a>
+                                </li>
+                                <li ng-if="isLoggedIn && isAdmin">
                                     <a data-target="" ng-click="manageAdrMixers()"><i class="icon-users"></i><span>Manage ADR Mixers</span></a>
                                 </li>
                                 <li>
