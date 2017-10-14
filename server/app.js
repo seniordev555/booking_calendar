@@ -21,10 +21,12 @@ require("./models/user");
 require("./models/booking");
 require("./models/booking-email-notification");
 require("./models/user-setting");
+require('./models/admin_setting');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var bookings = require('./routes/bookings');
+var admin_settings = require('./routes/admin_settings');
 
 var appAuth = require('./routes/auth');
 
@@ -63,6 +65,7 @@ if(process.env.NODE_ENV === 'development') {
 }
 
 app.use('/', routes);
+app.use('/settings', admin_settings);
 app.use('/users', users);
 app.use('/api/bookings', bookings);
 

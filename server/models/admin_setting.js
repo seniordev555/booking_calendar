@@ -4,8 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AdminSettingSchema = new Schema({
-  key: String,
-  value: String
+  title: String
 }, { strict: false, collection: "admin-settings" });
 
-mongoose.model('AdminSetting', AdminSettingSchema);
+module.exports = mongoose.model('AdminSetting', AdminSettingSchema);

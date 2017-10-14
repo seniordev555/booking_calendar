@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="newApp">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -7,7 +7,7 @@
         <meta name="author" content="trexanhlab">
 
         <!--<link rel="shortcut icon" href="./theme_components/assets/global/images/favicon.png" type="image/png">-->
-        <title>Todd-AO Hollywood ADR Schedule</title>
+        <title ng-bind="adminSettings.title">Todd-AO Hollywood ADR Schedule</title>
 
         <!-- This file contains relative links to css from other folders. -->
         <!-- Therefore, it needs to be excluded from gulp's build process -->
@@ -33,7 +33,7 @@
         <script src="./theme_components/assets/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
     </head>
-    <body ng-app="newApp" class="{{$state.current.data.bodyClass}}" ng-controller="mainCtrl">
+    <body class="{{$state.current.data.bodyClass}}" ng-controller="mainCtrl">
         <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -96,6 +96,7 @@
         <script src="./theme_components/assets/global/plugins/icheck/icheck.min.js"></script>
         <script type="text/javascript" src="./bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
         <script type="text/javascript" src="./node_modules/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript" src="./bower_components/angular-flash-alert/dist/angular-flash.min.js"></script>
 
         <script src="mainCtrl.js"></script>
         <script src="./app/layout/topbarCtrl.js"></script>

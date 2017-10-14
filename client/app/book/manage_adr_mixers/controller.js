@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('newApp')
-  .controller('manageAdrMixersController', ['$scope', 'currentUser', '$http', 'timeUtil', 'calendarUtil', '$compile', '$rootScope', 'LaddaLoadingService',
-  function($scope, currentUser, $http, timeUtil, calendarUtil, $compile, $rootScope, LaddaLoadingService) {
+  .controller('manageAdrMixersController', ['$scope', 'currentUser', '$http', 'timeUtil', 'calendarUtil', '$compile', '$rootScope',
+  function($scope, currentUser, $http, timeUtil, calendarUtil, $compile, $rootScope) {
     $scope.users = [];
     $scope.pagination = { pages: 1, page: 1, limit: 5, total: 0, q: '', isAdrMixer: false, role: '' };
     $scope.isLoading = false;
