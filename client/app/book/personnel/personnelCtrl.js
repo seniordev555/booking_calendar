@@ -76,10 +76,12 @@ function personnelCtrl($scope, currentUser, $http, RegExp) {
     }
 
     function searchUsersForSharing(val) {
+        var production = vm.booking.production;
         return $http.get(TXP.serverUrl + 'users/search', {
             params: {
                 field: 'email',
-                value: val
+                value: val,
+                production: production
             }
         }).then(function(response) {
             return response.data.data.map(function(element) {

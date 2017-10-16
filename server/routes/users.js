@@ -25,21 +25,48 @@ var listAdrMixer = function (req, res, next) {
 function searchUser(req, res) {
     var searchKey = req.query.field || '_id';
     var searchValue = req.query.value || '';
+    var user = req.user;
+    var production = req.query.production || '';
 
     if (searchKey && searchValue) {
         var filters = {};
         filters[searchKey] = new RegExp("^" + searchValue);
-        return User.find(filters, "email _id profilePhoto profileType fullname", function (err, users) {
-            res.json({
-                "data": users
+        if (user && user.role == 'admin') {
+            User.find(filters, "email _id profilePhoto profileType fullname", function (err, users) {
+              return res.json({
+                  "data": users
+              });
             });
+        } else {
+            var booking_filters = { production: new RegExp(production, 'i') };
+            if (user) booking_filters['owner'] = user._id.toString();
+            Booking.find(booking_filters).populate('personnel.shared_users', 'email _id profilePhoto profileType fullname').exec(function(err, bookings) {
+                if(err) {
+                    return res.json({
+                        data: []
+                    });
+                }
+                var users = [];
+                var email_regex = new RegExp("^" + searchValue);
+                bookings.forEach(function(booking) {
+                    booking.personnel.shared_users.forEach(function(user) {
+                        if(email_regex.test(user.email)) {
+                            users.push(user);
+                        }
+                    });
+                });
+                users = _.uniqBy(users, '_id');
+                return res.json({
+                    data: users
+                });
+            }) ;
+        }
+
+    } else {
+        return res.json({
+            "data": []
         });
     }
-
-    return res.json({
-        "data": []
-    });
-
 }
 
 function getUserSettings(req, res) {
@@ -161,7 +188,7 @@ var destroy = function(req, res) {
     });
 };
 
-router.get('/search', searchUser);
+router.get('/search', isLoggedIn, searchUser);
 
 router.get('/adr-mixers', listAdrMixer);
 
