@@ -4,34 +4,21 @@ angular.module('newApp')
   .controller('manageAdrMixersController', ['$scope', 'currentUser', '$http', 'timeUtil', 'calendarUtil', '$compile', '$rootScope',
   function($scope, currentUser, $http, timeUtil, calendarUtil, $compile, $rootScope) {
     $scope.users = [];
-    $scope.pagination = { pages: 1, page: 1, limit: 5, total: 0, q: '', isAdrMixer: false, role: '' };
+    $scope.pagination = { pages: 1, page: 1, limit: 5, total: 0, q: '', isAdrMixer: false, role: '', sort_field: 'fullname', sort_order: -1 };
     $scope.isLoading = false;
 
     $scope.$on('booking.adr_mixers_modal_opened', function(angularEvent, angularEventParams) {
-      var query_string = 'q=' + $scope.pagination.q;
-      query_string += '&page=1';
-      query_string += '&limit' + $scope.pagination.limit;
-      query_string += '&role=' + $scope.pagination.role;
-      query_string += '&is_adr_mixer=' + $scope.pagination.isAdrMixer;
-      $scope.getUsers(query_string);
+      $scope.pagination.page = 1;
+      $scope.getUsers($scope.buildQuery());
     });
 
     $scope.pageChanged = function() {
-      var query_string = 'q=' + $scope.pagination.q;
-      query_string += '&page=' + $scope.pagination.page;
-      query_string += '&limit' + $scope.pagination.limit;
-      query_string += '&role=' + $scope.pagination.role;
-      query_string += '&is_adr_mixer=' + $scope.pagination.isAdrMixer;
-      $scope.getUsers(query_string);
+      $scope.getUsers($scope.buildQuery());
     };
 
     $scope.submitForm = function() {
-      var query_string = 'q=' + $scope.pagination.q;
-      query_string += '&page=1';
-      query_string += '&limit' + $scope.pagination.limit;
-      query_string += '&role=' + $scope.pagination.role;
-      query_string += '&is_adr_mixer=' + $scope.pagination.isAdrMixer;
-      $scope.getUsers(query_string);
+      $scope.pagination.page = 1;
+      $scope.getUsers($scope.buildQuery());
     };
 
     $scope.getUsers = function(query_string) {
@@ -72,12 +59,8 @@ angular.module('newApp')
         if (willDelete) {
           $http.delete(TXP.serverUrl + 'users/' + user._id).then(function (successResponse) {
             if (successResponse.status == 204) {
-              var query_string = 'q=' + $scope.pagination.q;
-              query_string += '&page=1';
-              query_string += '&limit' + $scope.pagination.limit;
-              query_string += '&role=' + $scope.pagination.role;
-              query_string += '&is_adr_mixer=' + $scope.pagination.isAdrMixer;
-              $scope.getUsers(query_string);
+              $scope.pagination.page = 1;
+              $scope.getUsers($scope.buildQuery());
             } else {
               $scope.isLoading = false;
               swal("Error!", "You can't delete this user because of server error.", "error");
@@ -85,6 +68,33 @@ angular.module('newApp')
           });
         }
       });
+    };
+
+    $scope.sortClass = function(field) {
+      return field != $scope.pagination.sort_field ? 'fa-sort' : (
+        $scope.pagination.sort_order == 1 ? 'fa-sort-asc' : 'fa-sort-desc'
+        );
+    };
+
+    $scope.sortTable = function(field) {
+      if(field == $scope.pagination.sort_field) {
+        $scope.pagination.sort_order = $scope.pagination.sort_order * (-1);
+      } else {
+        $scope.pagination.sort_field = field;
+        $scope.pagination.sort_order = -1;
+      }
+      $scope.getUsers($scope.buildQuery());
+    };
+
+    $scope.buildQuery = function() {
+      var query_string = 'q=' + $scope.pagination.q;
+      query_string += '&page=' + $scope.pagination.page;
+      query_string += '&limit' + $scope.pagination.limit;
+      query_string += '&role=' + $scope.pagination.role;
+      query_string += '&is_adr_mixer=' + $scope.pagination.isAdrMixer;
+      query_string += '&sort=' + $scope.pagination.sort_field;
+      query_string += '&order=' + ($scope.pagination.sort_order == 1 ? 'asc' : 'desc');
+      return query_string;
     };
 
 }]);

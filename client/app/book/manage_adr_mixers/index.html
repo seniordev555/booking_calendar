@@ -42,10 +42,10 @@
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>ADR Mixer</th>
+            <th>Name <a href="javascript:void(0);" ng-click="sortTable('fullname')"><i class="fa {{sortClass('fullname')}}"></i></a></th>
+            <th>Email <a href="javascript:void(0);" ng-click="sortTable('email')"><i class="fa {{sortClass('email')}}"></i></a></th>
+            <th>Role <a href="javascript:void(0);" ng-click="sortTable('role')"><i class="fa {{sortClass('role')}}"></i></a></th>
+            <th>ADR Mixer <a href="javascript:void(0);" ng-click="sortTable('isAdrMixer')"><i class="fa {{sortClass('isAdrMixer')}}"></i></a></th>
             <th></th>
           </tr>
         </thead>

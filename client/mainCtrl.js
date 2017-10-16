@@ -1,6 +1,6 @@
 ﻿angular.module('newApp').controller('mainCtrl',
-    ['$scope', 'applicationService', 'pluginsService', '$location',
-        function ($scope, applicationService, pluginsService, $location) {
+    ['$scope', 'applicationService', 'pluginsService', '$location', '$rootScope',
+        function ($scope, applicationService, pluginsService, $location, $rootScope) {
             $(document).ready(function () {
                 applicationService.init();
                 pluginsService.init();

@@ -5,9 +5,15 @@
             <div class="logopanel">
                 <a href="/"></a>
             </div>
-            <div class="phone-number">
-                <a href="skype:+13106137138?call" class="phone m-l-10">
-                    <i class="fa fa-phone-square"></i> 310-613-7138
+            <div class="app-info">
+                <div class="app-info__address" ng-if="!!adminSettings.address">
+                    <i class="fa fa-map-marker"></i> {{adminSettings.address}}
+                </div>
+                <a href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
+                    <i class="fa fa-envelope"></i> {{adminSettings.email}}
+                </a>
+                <a href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
+                    <i class="fa fa-phone-square"></i> {{adminSettings.phone}}
                 </a>
             </div>
             <!-- BEGIN TOPBAR -->

@@ -104,13 +104,16 @@ var list = function(req, res) {
     var limit = parseInt(req.query.limit) || 10;
     var role = req.query.role || '';
     var filter = { _id: { $ne: userId }, $or: [{ fullname: new RegExp(q, 'i') }, { email: new RegExp(q, 'i') }] };
+    var field = req.query.sort || 'fullname';
+    var order = req.query.order == 'asc' ? 1 : -1;
+    var sort = {}; sort[field] = order;
     if (role != '') {
         filter['role'] = role;
     }
     if( req.query.is_adr_mixer && (req.query.is_adr_mixer == true || req.query.is_adr_mixer == 'true') ) {
         filter['isAdrMixer'] = true;
     }
-    User.paginate(filter, { page: page, limit: limit, sort: { isAdrMixer: -1, role: 1, fullname: 1, email: 1 } }).then(function(result) {
+    User.paginate(filter, { page: page, limit: limit, sort: sort }).then(function(result) {
         return res.json({
             data: result
         });
