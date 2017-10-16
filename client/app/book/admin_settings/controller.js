@@ -38,4 +38,12 @@ angular.module('newApp')
         LaddaLoadingService.stopLoadingButton(loading);
       });
     };
+
+    $scope.removeMicrophone = function ($index) {
+      $scope.settings.microphones.splice($index, 1);
+    }
+
+    $scope.addMicrophone = function () {
+      $scope.settings.microphones.push('');
+    }
 }]);

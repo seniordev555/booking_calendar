@@ -7,7 +7,8 @@ var AdminSettingSchema = new Schema({
   title: String,
   address: String,
   email: String,
-  phone: String
+  phone: String,
+  microphones: [String]
 }, { strict: false, collection: "admin-settings" });
 
 module.exports = mongoose.model('AdminSetting', AdminSettingSchema);

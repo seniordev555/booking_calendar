@@ -25,7 +25,7 @@ var update = function(req, res) {
     if(!admin_setting) {
       admin_setting = new AdminSetting(settingsParams);
     } else {
-      admin_setting = _.merge(admin_setting, settingsParams);
+      admin_setting = _.assign(admin_setting, settingsParams);
     }
     admin_setting.save(function(err) {
       if(err) {

@@ -29,7 +29,7 @@
             $rootScope.$broadcast('booking.adr_mixers_modal_opened');
         };
 
-        $scope.openAdminSettings = function() {
+        $scope.manageAdminSettings = function() {
             $('#admin_settings').modal({ backdrop: 'static', keyboard: false });
             $rootScope.$broadcast('booking.admin_settings_modal_opened');
         }

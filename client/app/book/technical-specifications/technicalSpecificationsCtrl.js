@@ -1,8 +1,8 @@
 (function () {
     angular.module('newApp').controller('TechnicalSpecificationsCtrl', technicalSpecificationsCtrl);
 
-    technicalSpecificationsCtrl.$inject = ['$scope', '$compile'];
-    function technicalSpecificationsCtrl($scope, $compile) {
+    technicalSpecificationsCtrl.$inject = ['$scope', '$compile', '$rootScope'];
+    function technicalSpecificationsCtrl($scope, $compile, $rootScope) {
         var vm = this;
         vm.isRemoteClient = false;
         vm.localOrRemoteActorAndDirectorOptions = [
@@ -177,18 +177,9 @@
                 {content: "Prepare Beeps for Sessions", done: false}
             ];
         }
-        
+
         function getDefaultMicrophonesBoom(search) {
-            return [
-                'Schoeps CMIT 5U',
-                'Sennheiser MKH-60',
-                'Sennheiser MKH-8040', 
-                'Neumann U-87',
-                'Neumman U-89',
-                'LAV Mics',
-                'Sanken COS-11D',
-                'Countryman Lav'
-            ];
+            return $rootScope.adminSettings.microphones || [];
         }
 
         function getSampleRates () {
