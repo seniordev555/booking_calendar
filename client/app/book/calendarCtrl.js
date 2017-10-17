@@ -56,7 +56,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
     }
     $scope.switchCalendarWeekMode = switchCalendarWeekMode;
     $scope.saveNotificationSettings = saveNotificationSettings;
-    
+
     function canUpdate(event) {
         if (event.can_update) {
             return true;
@@ -90,7 +90,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
                             title = "Hold";
                         } else {
                             title = "Booked";
-                        }                                
+                        }
                     }
                     if (!isAdmin && moment().isAfter(start, 'day')) {
                         editable = false;
@@ -148,6 +148,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
                 start = data.start;
                 eventInitData.start = data.start;
                 eventInitData.end = data.end;
+                eventInitData.booking_status = "Book";
                 break;
             case OPEN_MANAGE_BOOKING_MODAL_ACTIONS.CLICK_ADD_HOLD_BUTTON:
                 // Add booking
@@ -167,7 +168,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         }
 
         eventInitData.isAddNew = isAddNew;
-        
+
         //only admin can add/edit time in the past
         if (timeUtil.isAfterNow(start)  && !isAdmin) {
             return false;
@@ -178,7 +179,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         }
 
         $rootScope.$broadcast('event-modal-open', eventInitData);
-        
+
         $rootScope.$on('$locationChangeStart', function (event) {
             // $uibModalStack.dismissAll();
             $("#booking-modal").find("[data-dismiss='modal']").trigger("click");
@@ -198,14 +199,14 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         var toggleHtml = $('.fc-dropdown-toggle').html();
         if(toggleHtml == undefined)
         {
-            toggleHtml = 
-                        '<ul class="dropdown-menu fc-dropdown-toggle">' + 
+            toggleHtml =
+                        '<ul class="dropdown-menu fc-dropdown-toggle">' +
                             '<li><a onClick="$(\'.fc-addHoldBtn-button\').trigger(\'click\'); return false;">Add Hold</a></li>' +
                             '<li><a onClick="$(\'.fc-addBookingBtn-button\').trigger(\'click\'); return false;">Add Booking</a></li>' +
-                            '<li><a onClick="$(\'.fc-today-button\').trigger(\'click\'); return false;">Today</a></li>' + 
+                            '<li><a onClick="$(\'.fc-today-button\').trigger(\'click\'); return false;">Today</a></li>' +
                         '</ul>';
             $('.fc-right').append($(toggleHtml));
-        }        
+        }
     }
 
     function openConfirmationModal(event, delta, revertFunc, jsEvent, ui, view) {
@@ -213,7 +214,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         var modalBodyHtml = '';
         var modalBody = $("#drag-booking-modal").find(".modal-body");
         var modalFooter = $("#drag-booking-modal").find(".modal-footer");
-        
+
         var newStart = moment(event.start).format("HH:mm");
         var newEnd = moment(event.end).format("HH:mm");
         modalBodyHtml += '<div class="text-center m-b-10">' + moment(event.start).format("ddd, MMM Do YYYY") + '</div>';
@@ -221,7 +222,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         modalBodyHtml += '<div class="text-center"><h2 class="w-500">' +
                             newStart + ' - ' + newEnd +
                         '</h2></div>';
-        
+
         var undoButton = '<button ng-click="dragging.undo()" class="btn btn-link pull-right">Cancel</button>';
         var submitButton = '<button ng-hide="dragging.error" ng-click="dragging.submit()" class="btn btn-blue pull-right confirm-change-time ladda-button" data-style="slide-left"><span class="ladda-label">Submit</span></button>';
         var modalFooterHtml = undoButton + submitButton;
@@ -355,23 +356,23 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
                         LaddaLoadingService.stopLoadingButton(loading);
                     });
                 }
-            }); 
+            });
         }
     }
     function hideRemoveButton(event, jsEvent, view) {
         var domElement = jsEvent.currentTarget;
         $(domElement).find(".remove-button").remove();
     }
-    
+
     function switchCalendarWeekMode(mode) {
         UserSettings.set('calendar_mode', mode);
         $scope.calendar_mode = mode;
         var options = calendar.fullCalendar('getView').options;
         var start = calendar.fullCalendar('getView').start;
-        
+
         // keep button icons
         delete options.buttonText;
-        
+
         // set first day of week
         if (mode == 'sunday') {
             options.firstDay  = 0;
@@ -379,11 +380,11 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         if (mode == 'today') {
             options.firstDay = timeUtil.now().day();
         }
-        
+
         if (start.day() == options.firstDay) {
             return;
         }
-        
+
         // keep current view date
         if (start.day() < options.firstDay) {
             var delta = start.day() - options.firstDay;
@@ -393,7 +394,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         calendar.fullCalendar(options);
         calendar.fullCalendar('gotoDate', start);
     }
-    
+
     /**
      * init the full calendar
      */
@@ -436,12 +437,12 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
                     click: function () {
                         openAddBookingModal(null, OPEN_MANAGE_BOOKING_MODAL_ACTIONS.CLICK_ADD_HOLD_BUTTON);
                     }
-                }, 
+                },
                 dropdownBtn: {
                     text: '+',
                     click: function() {
                         return;
-                    } 
+                    }
                 }
             },
             header: {
@@ -467,7 +468,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
             windowResize: windowResize,
             eventDrop: openConfirmationModal,
             eventResize: openConfirmationModal,
-            viewRender: function () {                    
+            viewRender: function () {
                 //show today button if today is not in calendar
                 var view = $calendarElement.fullCalendar('getView');
                 var now = timeUtil.now();
@@ -475,18 +476,18 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
                     $('.fc-today-button').show();
                 } else {
                     $('.fc-today-button').hide();
-                    
+
                     var todayShortDayOfWeek = timeUtil.now().format("ddd").toLowerCase();
 
                     //Add Today to today text so "Sat 1/2" -> "Today Sat 1/2"
                     //the current logic assume that today is always the first day of the week
                     var todayHeaderEl = $('.fc-head .fc-' + todayShortDayOfWeek);
                     var todayHTML = "Today " + todayHeaderEl.html();
-                    
+
                     // Make Today standout
                     todayHeaderEl.html(todayHTML).addClass('f-16');
                 }
-                
+
                 // add footer same as header
                 var $calendarViewElement = $calendarElement.fullCalendar('getView').el;
                 var thead = $calendarViewElement.find(".fc-head");
@@ -563,7 +564,7 @@ function calendarCtrl($scope, $compile, $http, currentUser, timeUtil, $rootScope
         }
         return null;
     }
-    
+
     function saveNotificationSettings() {
         var settings = angular.copy($scope.emailNotifications);
         $http.put(TXP.serverUrl + 'users/me', {emailNotifications: settings}).then( function (res) {
