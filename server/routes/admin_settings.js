@@ -27,6 +27,9 @@ var update = function(req, res) {
     } else {
       admin_setting = _.assign(admin_setting, settingsParams);
     }
+    // sort microphones
+    admin_setting.microphones = admin_setting.microphones || [];
+    admin_setting.microphones = _.sortBy(admin_setting.microphones);
     admin_setting.save(function(err) {
       if(err) {
         return res.sendStatus(500);
