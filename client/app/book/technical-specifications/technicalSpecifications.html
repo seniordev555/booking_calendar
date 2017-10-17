@@ -48,7 +48,7 @@
                             class='input-sm form-control'
                             placeholder='Microphones Boom, e.g: Countryman Lav'
                             uib-typeahead="microphone for microphone in vm.microphones | filter:$viewValue"
-                            typeahead-focus-first="false"
+                            typeahead-focus-first="true"
                             typeahead-min-length="0"
                             name='preferred_microphones_boom'/>
                     </div>
@@ -82,7 +82,7 @@
                             <label class="m-b-0">
                                 <input ng-model="vm.selectedClients[client.value]"
                                        ng-change="vm.updateClientTechs()"
-                                       icheck data-checkbox="icheckbox_square-blue" 
+                                       icheck data-checkbox="icheckbox_square-blue"
                                        value='{{client.value}}' type='checkbox' name='clients'>
                                 &nbsp;{{client.title}}
                             </label>

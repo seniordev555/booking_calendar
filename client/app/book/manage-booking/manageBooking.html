@@ -102,7 +102,7 @@
             <div class="col-sm-10">
                 <div class='row' ng-repeat="actor in event_info.actors track by $index" ng-repeat-finish="setInputActors()">
                     <div class='col-sm-5 prepend-icon p-r-0'>
-                        <input type="text" class="form-control" ng-model="event_info.actors[$index].name" placeholder="Actor name" uib-typeahead="item as item.name for item in searchActorsForProduction($viewValue)" typeahead-loading="loadingActors" typeahead-popup-template-url="searchActorAutoCompleteTemplate.html" typeahead-no-results="noResults" typeahead-wait-ms="500" autofocus />
+                        <input type="text" class="form-control" ng-model="event_info.actors[$index].name" placeholder="Actor name" uib-typeahead="item as item.name for item in searchActorsForProduction($viewValue)" typeahead-loading="loadingActors" typeahead-popup-template-url="searchActorAutoCompleteTemplate.html" typeahead-no-results="noResults" typeahead-wait-ms="500" autofocus typeahead-focus-first="true" typeahead-min-length="0" />
                         <i class="icon-user"></i>
                     </div>
                     <div class='col-sm-5 prepend-icon p-r-0'>
