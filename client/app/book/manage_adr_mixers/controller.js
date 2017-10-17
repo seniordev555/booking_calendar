@@ -97,4 +97,8 @@ angular.module('newApp')
       return query_string;
     };
 
+    $scope.userLastSignInAt = function(date) {
+      return !!date ? timeUtil.formatDateClient(date) : '';
+    };
+
 }]);

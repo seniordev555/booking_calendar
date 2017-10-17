@@ -1,4 +1,4 @@
-/* 
+/*
  * Authentication
  */
 'use strict';
@@ -11,7 +11,7 @@ var BookingHasher = require('../helpers/booking-hasher');
 
 /**
  * Add client social account to database
- * 
+ *
  * @param {object} profile
  * {
         'profileId': 'id of external social network',
@@ -29,7 +29,7 @@ authCommon.addUserToDb = function(profile, done) {
         if (err) {
             return done(err);
         }
-        
+
         if (user) {
             user.set({
                 'profilePhoto': profile.profilePhoto,
@@ -37,7 +37,8 @@ authCommon.addUserToDb = function(profile, done) {
                 'profileAccessToken': profile.accessToken,
                 'profileUrl': profile.profileUrl,
                 'email': profile.email,
-                "isEmpty": false
+                "isEmpty": false,
+                last_sign_in_at: new Date()
             });
             user.save(function (err, res) {
                 done(null, user);
@@ -51,7 +52,8 @@ authCommon.addUserToDb = function(profile, done) {
                 'profilePhoto': profile.profilePhoto,
                 'profileUrl': profile.profileUrl,
                 'email': profile.email,
-                "isEmpty": false
+                "isEmpty": false,
+                last_sign_in_at: new Date()
             }, function (err, user) {
                 done(null, user);
             });
@@ -86,11 +88,11 @@ authCommon.authenticated = function (req, profile, callback) {
             }
         });
     } else {
-        authCommon.addUserToDb(profile, callback);   
+        authCommon.addUserToDb(profile, callback);
     }
 };
 
-authCommon.linkToUser = function (userId, profile, callback) {    
+authCommon.linkToUser = function (userId, profile, callback) {
     User.findById(userId, function (err, user) {
         user.set({
             'profileId': profile.profileId,
@@ -100,9 +102,10 @@ authCommon.linkToUser = function (userId, profile, callback) {
             'profilePhoto': profile.profilePhoto,
             'profileUrl': profile.profileUrl,
             'email': profile.email,
-            "isEmpty": false
+            "isEmpty": false,
+            last_sign_in_at: new Date()
         });
-        
+
         user.save(function () {
             callback(null, user);
         });
@@ -115,7 +118,7 @@ authCommon.getBookingRedirectUrl = function (req) {
         redirectUrl += "#/booking/" + req.session.bookingId;
         delete req.session.bookingId;
     }
-    
+
     return redirectUrl;
 }
 
@@ -126,14 +129,14 @@ authCommon.invitationTokenReceiver = function (req, res, next) {
     if (! req.query.invitation_token) {
         return next();
     }
-    
+
     async.series({
         user: function (callback) {
             BookingHasher.getUserByToken(req.query.invitation_token, function (user) {
                 if (!user) {
                     return callback();
                 }
-                
+
                 req.session.userId = user.id;
                 callback();
             });

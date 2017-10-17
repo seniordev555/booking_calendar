@@ -46,6 +46,7 @@
             <th>Email <a href="javascript:void(0);" ng-click="sortTable('email')"><i class="fa {{sortClass('email')}}"></i></a></th>
             <th>Role <a href="javascript:void(0);" ng-click="sortTable('role')"><i class="fa {{sortClass('role')}}"></i></a></th>
             <th>ADR Mixer <a href="javascript:void(0);" ng-click="sortTable('isAdrMixer')"><i class="fa {{sortClass('isAdrMixer')}}"></i></a></th>
+            <th>Last Login <a href="javascript:void(0);" ng-click="sortTable('last_sign_in_at')"><i class="fa {{sortClass('last_sign_in_at')}}"></i></a></th>
             <th></th>
           </tr>
         </thead>
@@ -62,6 +63,9 @@
                        icheck data-checkbox="icheckbox_square-blue"
                        value='{{user.isAdrMixer}}' type='checkbox' />
               </label>
+            </td>
+            <td>
+              {{userLastSignInAt(user.last_sign_in_at)}}
             </td>
             <td>
               <a href="javascript:void(0);" class="text-danger" ng-click="deleteUser($index)"><i class="fa fa-trash"></i></a>

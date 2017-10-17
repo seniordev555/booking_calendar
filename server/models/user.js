@@ -28,7 +28,8 @@ var UserSchema = new Schema({
         "newSharedBooking": {
             type: Boolean, default: true
         }
-    }
+    },
+    last_sign_in_at: Date
 }, {strict: false, collection: "users"});
 
 // Validate role field
