@@ -2,7 +2,7 @@
 	display: none;
 }
 
-@media screen and (max-width: 480px) 
+@media screen and (max-width: 480px)
 {
 	.mobile-only {
 		display: block;
@@ -14,9 +14,36 @@
 				bottom : -20px;
 				top: initial;
 			}
+            .app-info.mobile-only {
+                display: flex;
+                flex-direction: column;
+                z-index: 1001;
+                color: #777;
+                font-size: 12px;
+                align-items: center;
+
+                a {
+                    color: #777;
+                    margin-right: 5px;
+
+                    &:last-child {
+                      margin-right: 0;
+                    }
+
+                    &:hover {
+                        text-decoration: none;
+                        color: #777;
+                    }
+                }
+
+                .fa {
+                    width: 16px;
+                    text-align: center;
+                }
+            }
 		}
 		.booking-header {
-			height: @headerHeight; 
+			height: @headerHeight;
 			.logopanel {
 				width: 100% !important;
 				display: inline;
@@ -27,6 +54,9 @@
 	    			width: 172px;
 				}
 			}
+            .app-info {
+                display: none;
+            }
 			.phone-number {
 				width: 100%;
 			    top: @headerHeight;
@@ -53,7 +83,7 @@
 								}
 							}
 						}
-						
+
 						.dropdown-menu:after {
 							border-bottom: 6px solid #2b2e33;
 							border-left: 6px solid rgba(0, 0, 0, 0);
@@ -67,7 +97,7 @@
 					}
 				}
 			}
-		}		
+		}
 	}
 }
 

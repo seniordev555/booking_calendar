@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 var AdminSettingSchema = new Schema({
   title: String,
+  location: String,
   address: String,
   email: String,
   phone: String,

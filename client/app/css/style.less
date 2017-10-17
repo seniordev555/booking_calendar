@@ -53,14 +53,20 @@ body {
         .app-info {
             position: absolute;
             left: 150px;
-            top: 0;
+            top: 6px;
             display: flex;
             flex-direction: column;
             z-index: 1001;
             color: #777;
+            font-size: 12px;
 
             a {
                 color: #777;
+                margin-right: 5px;
+
+                &:last-child {
+                  margin-right: 0;
+                }
 
                 &:hover {
                     text-decoration: none;

@@ -9,12 +9,14 @@
                 <div class="app-info__address" ng-if="!!adminSettings.address">
                     <i class="fa fa-map-marker"></i> {{adminSettings.address}}
                 </div>
-                <a href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
-                    <i class="fa fa-envelope"></i> {{adminSettings.email}}
-                </a>
-                <a href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
-                    <i class="fa fa-phone-square"></i> {{adminSettings.phone}}
-                </a>
+                <div class="app-info__line">
+                    <a href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
+                        <i class="fa fa-envelope"></i> {{adminSettings.email}}
+                    </a>
+                    <a href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
+                        <i class="fa fa-phone-square"></i> {{adminSettings.phone}}
+                    </a>
+                </div>
             </div>
             <!-- BEGIN TOPBAR -->
             <div class="topbar" data-ng-controller="topbarCtrl">
@@ -72,14 +74,22 @@
                             Los Angeles / PST <span class="time">{{time}}</span> &nbsp;-&nbsp;
                         </span>
                         <span>Copyright <span class="copyright">&copy;</span> 2017 </span><br/>
-                        <span>3rdStreetADR</span>.
+                        <span>{{adminSettings.title}}</span>.
                         <span>All rights reserved. </span>
                     </p>
-                    <p class="text-center phone-number mobile-only">
-                        <a href="skype:+13106137138?call" class="phone m-l-10">
-                            <i class="fa fa-phone-square"></i> 310-613-7138
-                        </a>
-                    </p>
+                    <div class="app-info mobile-only">
+                        <div class="app-info__address" ng-if="!!adminSettings.address">
+                            <i class="fa fa-map-marker"></i> {{adminSettings.address}}
+                        </div>
+                        <div class="app-info__line">
+                            <a href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
+                                <i class="fa fa-envelope"></i> {{adminSettings.email}}
+                            </a>
+                            <a href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
+                                <i class="fa fa-phone-square"></i> {{adminSettings.phone}}
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
