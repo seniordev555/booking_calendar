@@ -54,6 +54,7 @@
                 vm.deliverables = vm.booking.technical_specifications.deliverables;
                 isDoneAllDeliverables();
             }
+            vm.microphones = getDefaultMicrophonesBoom();
         });
 
         function updateClientTechs () {
