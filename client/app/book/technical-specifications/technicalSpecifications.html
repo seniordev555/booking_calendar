@@ -58,8 +58,12 @@
                 <div class='form-group m-b-5'>
                     <div class="col-sm-12">
                         <input ng-model="vm.booking.technical_specifications.lavalier"
-                               class='input-sm form-control' placeholder='Lavalier...'
-                               type='text' name='lavalier'/>
+                               class="input-sm form-control"
+                               placeholder="Lavalier..."
+                               type="text" name="lavalier"
+                               uib-typeahead="microphone for microphone in vm.microphones | filter:$viewValue"
+                               typeahead-focus-first="true"
+                               typeahead-min-length="0" />
                     </div>
                 </div>
             </div>
