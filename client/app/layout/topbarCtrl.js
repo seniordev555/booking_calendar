@@ -25,12 +25,12 @@
         }
 
         $scope.manageAdrMixers = function() {
-            $('#manage_adr_mixers_modal').modal({ backdrop: 'static', keyboard: false });
+            $('#manage_adr_mixers_modal').modal({ backdrop: 'static' });
             $rootScope.$broadcast('booking.adr_mixers_modal_opened');
         };
 
         $scope.manageAdminSettings = function() {
-            $('#admin_settings').modal({ backdrop: 'static', keyboard: false });
+            $('#admin_settings').modal({ backdrop: 'static' });
             $rootScope.$broadcast('booking.admin_settings_modal_opened');
         }
     }
