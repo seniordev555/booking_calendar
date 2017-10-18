@@ -6,14 +6,14 @@
                 <a href="https://toddao.com/"></a>
             </div>
             <div class="app-info">
-                <a href="https://www.google.com/maps/place/{{adminSettings.address}}" class="app-info__address" ng-if="!!adminSettings.address" target="_blank">
+                <a ng-href="https://www.google.com/maps/place/{{adminSettings.address}}" class="app-info__address" ng-if="!!adminSettings.address" target="_blank">
                     <i class="fa fa-map-marker"></i> {{adminSettings.address}}
                 </a>
                 <div class="app-info__line">
-                    <a href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
+                    <a ng-href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
                         <i class="fa fa-envelope"></i> {{adminSettings.email}}
                     </a>
-                    <a href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
+                    <a ng-href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
                         <i class="fa fa-phone-square"></i> {{adminSettings.phone}}
                     </a>
                 </div>
@@ -78,14 +78,14 @@
                         <span>All rights reserved. </span>
                     </p>
                     <div class="app-info mobile-only">
-                        <a href="https://www.google.com/maps/place/{{adminSettings.address}}" class="app-info__address" ng-if="!!adminSettings.address" target="_blank">
+                        <a ng-href="https://www.google.com/maps/place/{{adminSettings.address}}" class="app-info__address" ng-if="!!adminSettings.address" target="_blank">
                             <i class="fa fa-map-marker"></i> {{adminSettings.address}}
                         </a>
                         <div class="app-info__line">
-                            <a href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
+                            <a ng-href="mailto:{{adminSettings.email}}" class="app-info__email" ng-if="!!adminSettings.email">
                                 <i class="fa fa-envelope"></i> {{adminSettings.email}}
                             </a>
-                            <a href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
+                            <a ng-href="skype:+1{{adminSettings.phone}}?call" class="app-info__phone" ng-if="!!adminSettings.phone">
                                 <i class="fa fa-phone-square"></i> {{adminSettings.phone}}
                             </a>
                         </div>
