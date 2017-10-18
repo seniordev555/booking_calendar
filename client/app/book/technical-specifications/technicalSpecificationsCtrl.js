@@ -35,6 +35,7 @@
             vm.booking = $scope.$parent.event_info;
             vm.selectedClients = {};
             vm.isRemoteClient = isThereRemoteClient();
+            vm.microphones = getDefaultMicrophonesBoom();
             if (!vm.booking.technical_specifications) {
                 vm.booking.technical_specifications = {
                     local_or_remote_actor_and_director : 'local_actor_director'
@@ -54,7 +55,6 @@
                 vm.deliverables = vm.booking.technical_specifications.deliverables;
                 isDoneAllDeliverables();
             }
-            vm.microphones = getDefaultMicrophonesBoom();
         });
 
         function updateClientTechs () {
