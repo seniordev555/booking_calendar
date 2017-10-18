@@ -486,7 +486,7 @@ var searchActors = function(req, res) {
     }
     bookings.forEach(function(booking) {
       if (booking.actors && booking.actors.length > 0) {
-        actors = _.union(actors, booking.actors, 'name');
+        actors = _.sortBy(_.unionBy(actors, booking.actors, 'name'), ['name']);
       }
     });
     return res.json({ data: actors });
