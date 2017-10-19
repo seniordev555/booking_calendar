@@ -13,6 +13,7 @@ angular.module('newApp')
         $http.get(TXP.serverUrl + 'settings').then(function(response) {
           if(response.data && response.data.data) {
             $scope.settings = response.data.data;
+            $scope.settings.microphones ||= [];
           }
           $scope.isLoading = false;
         });
