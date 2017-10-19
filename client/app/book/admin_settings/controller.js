@@ -7,7 +7,8 @@ angular.module('newApp')
     $scope.settings = {};
 
     $scope.$on('booking.admin_settings_modal_opened', function(angularEvent, angularEventParams) {
-      $scope.settings = angular.copy($rootScope.adminSettings);
+      $scope.settings = angular.copy($rootScope.adminSettings) || {};
+      $scope.settings.microphones = $scope.settings.microphones || [];
       if(!$scope.settings) {
         $scope.isLoading = true;
         $http.get(TXP.serverUrl + 'settings').then(function(response) {
