@@ -52,14 +52,11 @@ angular.module("newApp").run(['$rootScope', '$state', '$stateParams', 'currentUs
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.serverUrl = TXP.serverUrl;
+        $rootScope.adminSettings = { title: '' };
 
         $http.get(TXP.serverUrl + 'settings').then(function(response) {
             if(response.data && response.data.data) {
                 $rootScope.adminSettings = response.data.data;
-            } else {
-                $rootScope.adminSettings = {
-                    title: 'Todd-AO ADR Schedule'
-                };
             }
         });
     }
