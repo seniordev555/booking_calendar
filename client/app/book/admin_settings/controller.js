@@ -5,16 +5,17 @@ angular.module('newApp')
   function($scope, currentUser, $http, Flash, $rootScope, LaddaLoadingService) {
     $scope.isLoading = false;
     $scope.settings = {};
+    $scope.microphones = [];
 
     $scope.$on('booking.admin_settings_modal_opened', function(angularEvent, angularEventParams) {
-      $scope.settings = angular.copy($rootScope.adminSettings) || {};
-      $scope.settings.microphones = $scope.settings.microphones || [];
+      $scope.settings = angular.copy($rootScope.adminSettings);
+      $scope.microphones = $scope.settings['microphones'] || [];
       if(!$scope.settings) {
         $scope.isLoading = true;
         $http.get(TXP.serverUrl + 'settings').then(function(response) {
           if(response.data && response.data.data) {
             $scope.settings = response.data.data;
-            $scope.settings.microphones = $scope.settings.microphones || [];
+            $scope.microphones = $scope.settings['microphones'] || [];
           }
           $scope.isLoading = false;
         });
@@ -24,6 +25,7 @@ angular.module('newApp')
     $scope.saveSettings = function() {
       var loading = LaddaLoadingService.startLoadingButton(".save-admin-settings");
       $scope.isLoading = true;
+      $scope.settings['microphones'] = $scope.microphones;
       $http.put(TXP.serverUrl + 'settings', $scope.settings).then(function(response) {
         if(response.data && response.data.data) {
           $scope.settings = response.data.data;
@@ -42,10 +44,10 @@ angular.module('newApp')
     };
 
     $scope.removeMicrophone = function ($index) {
-      $scope.settings.microphones.splice($index, 1);
+      $scope.microphones.splice($index, 1);
     }
 
     $scope.addMicrophone = function () {
-      $scope.settings.microphones.push('');
+      $scope.microphones.push('');
     }
 }]);

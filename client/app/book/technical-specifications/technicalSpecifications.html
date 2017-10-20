@@ -69,19 +69,19 @@
             </div>
         </div>
 
-        <hr class="m-t-5 m-b-5">
-        <div class='row'>
+        <hr class="m-t-5 m-b-5" ng-if="vm.local_or_remote_actor_and_directors_options.length > 0">
+        <div class='row' ng-if="vm.local_or_remote_actor_and_directors_options.length > 0">
             <div class='col-sm-12'>
                 <div class='form-group m-b-5'>
                     <div class="icheck-inline col-sm-6 p-r-0 m-t-10">
-                        <label ng-repeat="option in vm.localOrRemoteActorAndDirectorOptions">
+                        <label ng-repeat="option in vm.local_or_remote_actor_and_directors_options">
                             <input ng-model="vm.booking.technical_specifications.local_or_remote_actor_and_director"
                                    ng-change="vm.updateClientTechs()"
                                    icheck data-radio="iradio_square-blue"
-                                   value='{{option.value}}' type='radio' name='remote_clients'> {{option.title}}
+                                   value='{{option.value}}' type='radio' name='local_or_remote_actor_and_directors_options'> {{option.title}}
                         </label>
                     </div>
-                    <div ng-show="vm.isRemoteClient" class="col-sm-6 m-t-5">
+                    <div ng-show="vm.booking.technical_specifications.local_or_remote_actor_and_director != 'local_actor_director'" class="col-sm-6 m-t-5">
                         <div ng-repeat="client in vm.availableRemoteClients" class="icheck-inline m-t-5">
                             <label class="m-b-0">
                                 <input ng-model="vm.selectedClients[client.value]"

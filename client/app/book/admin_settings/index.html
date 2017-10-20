@@ -52,13 +52,39 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="col-sm-4 control-label">Remote Client Options</label>
+        <div class="col-sm-8">
+          <div class="icheck-inline">
+            <label>
+              <input ng-model="settings.local_or_remote_actor_and_directors.local_actor_director"
+                     icheck data-checkbox="icheckbox_square-blue"
+                     value="true" type="checkbox" name="local_or_remote_actor_and_directors"> Local Actor & Director
+            </label>
+            <label>
+              <input ng-model="settings.local_or_remote_actor_and_directors.local_actor_with_remote_director"
+                     icheck data-checkbox="icheckbox_square-blue"
+                     value="true" type="checkbox" name="local_or_remote_actor_and_directors"> Local Actor with Remote Director
+            </label>
+            <label>
+              <input ng-model="settings.local_or_remote_actor_and_directors.local_director_with_remote_actor"
+                     icheck data-checkbox="icheckbox_square-blue"
+                     value="true" type="checkbox" name="local_or_remote_actor_and_directors"> Local Director with Remote Actor
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-12">
       <div class="form-group">
         <label class="col-sm-2 control-label">Microphones</label>
         <div class="col-sm-6">
-          <div class="row m-b-5" ng-repeat="microphone in settings.microphones track by $index">
+          <div class="row m-b-5" ng-repeat="microphone in microphones track by $index">
             <div class="col-sm-8">
-              <input type="text" class="form-control" ng-model="settings.microphones[$index]" />
+              <input type="text" class="form-control" ng-model="microphones[$index]" />
             </div>
             <div class="col-sm-4">
               <button class="btn btn-default bg-white m-0" type="button" ng-mouseenter="removeMicrophoneButtonsHover = true" ng-mouseleave="removeMicrophoneButtonsHover = false" ng-click="removeMicrophone($index)">

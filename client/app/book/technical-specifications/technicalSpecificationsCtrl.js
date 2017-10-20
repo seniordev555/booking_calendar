@@ -1,10 +1,9 @@
 (function () {
     angular.module('newApp').controller('TechnicalSpecificationsCtrl', technicalSpecificationsCtrl);
 
-    technicalSpecificationsCtrl.$inject = ['$scope', '$compile', '$rootScope'];
-    function technicalSpecificationsCtrl($scope, $compile, $rootScope) {
+    technicalSpecificationsCtrl.$inject = ['$scope', '$compile', '$rootScope', 'calendarUtil'];
+    function technicalSpecificationsCtrl($scope, $compile, $rootScope, calendarUtil) {
         var vm = this;
-        vm.isRemoteClient = false;
         vm.localOrRemoteActorAndDirectorOptions = [
             {title: 'Local Actor & Director', value: 'local_actor_director'},
             {title: 'Local Actor with Remote Director', value: 'local_actor_with_remote_director'},
@@ -34,12 +33,13 @@
             // $scope.event_info is inherited from parent controller: manageBookingCtrl
             vm.booking = $scope.$parent.event_info;
             vm.selectedClients = {};
-            vm.isRemoteClient = isThereRemoteClient();
             vm.microphones = getDefaultMicrophonesBoom();
+            vm.local_or_remote_actor_and_directors_options = calendarUtil.getLocalOrRemoteActorAndDirectors();
             if (!vm.booking.technical_specifications) {
-                vm.booking.technical_specifications = {
-                    local_or_remote_actor_and_director : 'local_actor_director'
-                };
+                vm.booking.technical_specifications = {};
+                if(vm.local_or_remote_actor_and_directors_options.length > 0) {
+                    vm.booking.technical_specifications['local_or_remote_actor_and_director'] = vm.local_or_remote_actor_and_directors_options[0].value;
+                }
                 vm.deliverables = getDefaultDeliverables();
                 assignDeliverables();
                 return;
@@ -59,8 +59,7 @@
 
         function updateClientTechs () {
             var clients = [];
-            vm.isRemoteClient = isThereRemoteClient();
-            if (vm.isRemoteClient) {
+            if (vm.booking.technical_specifications.local_or_remote_actor_and_director != 'local_actor_director') {
                 vm.availableRemoteClients.forEach(function (obj) {
                     var key = obj.value;
                     if (vm.selectedClients[key]) {
@@ -189,14 +188,6 @@
 
         function getFrameRates () {
             return ['23.976', '24', '25'];
-        }
-
-        function isThereRemoteClient () {
-            return (
-                vm.booking.technical_specifications &&
-                vm.booking.technical_specifications.local_or_remote_actor_and_director &&
-                vm.booking.technical_specifications.local_or_remote_actor_and_director !== 'local_actor_director'
-            );
         }
     }
 })();

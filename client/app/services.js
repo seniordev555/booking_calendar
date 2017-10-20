@@ -2,38 +2,38 @@
     angular.module('newApp')
         .factory('currentUser', currentUser)
     ;
-    
+
     currentUser.$inject = ['$rootScope'];
     function currentUser($rootScope) {
         var save = function (user) {
             $rootScope.loggedInUser = user;
         };
-        
+
         var clear = function() {
             delete $rootScope.loggedInUser;
         };
-        
+
         var get = function () {
             return $rootScope.loggedInUser;
         };
-        
+
         var isSet = function () {
             if ($rootScope.loggedInUser) {
                 return true;
             }
             return false;
         }
-        
-        var hasRole = function(roleName) {            
+
+        var hasRole = function(roleName) {
             if ($rootScope.loggedInUser && $rootScope.loggedInUser.role && roleName == $rootScope.loggedInUser.role) {
                 return true;
             }
             return false;
         }
-        
+
         var getRole = function() {
-            if ($rootScope.loggedInUser 
-                    && $rootScope.loggedInUser.roles 
+            if ($rootScope.loggedInUser
+                    && $rootScope.loggedInUser.roles
                     && $rootScope.loggedInUser.roles.length
                     && $rootScope.loggedInUser.roles.length > 0
             ) {
@@ -57,7 +57,7 @@
             }
             return url;
         }
-        
+
         return {
             save: save,
             clear: clear,
@@ -76,21 +76,21 @@
     angular.module('newApp')
         .factory('timeUtil', timeUtil)
     ;
-    
+
     function timeUtil() {
         /**
          * Current time at default timezone
-         * 
+         *
          * @returns moment object
          */
         function now() {
             return moment().utcOffset(TXP.helpers.getTimezoneString());
         };
-        
+
         /**
          * Check if a time is in the past.
          * Compare with now at specified timezone
-         * 
+         *
          * @param moment time object time
          * @returns boolean
          */
@@ -99,7 +99,7 @@
             if (!time || !time.format) {
                 return false;
             }
-            
+
             //remove timezone info before compare
             if (time) {
                 var time = time.format("YYYY-MM-DD HH:mm:ss");
@@ -107,10 +107,10 @@
                 return moment(currentTime).isAfter(time);
             }
         }
-        
+
         /**
          * add support work with minus number in moment.subtract()
-         * 
+         *
          * @param momentObject moment
          * @param int amount
          * @param string interval
@@ -124,19 +124,19 @@
                 moment.add(amount, interval)
             }
         }
-        
+
         function formatDateServer(date) {
             var momentObj = moment(date, 'ddd, DD/MM/YYYY HH:mm');
             // add system timezone string before sending to server
             return moment(momentObj).format("YYYY-MM-DD HH:mm:ss") + " " + TXP.helpers.getTimezoneString();
         }
-        
+
         function convertServerDateToMoment(string) {
             // date data got from server has timezone 00:00
             // need to convert it to system timezone (PST, -08:00) to display
             return moment(string, "YYYY-MM-DD HH:mm:ss Z").utcOffset(TXP.helpers.getTimezoneString());
         }
-        
+
         function formatDateClient(date) {
             var momentObj = date;
             if (typeof date == 'string') {
@@ -144,11 +144,11 @@
             }
             return moment(momentObj).format("ddd, DD/MM/YYYY HH:mm");
         }
-        
+
         function convertClientDateToMoment(string) {
             return moment(string, "ddd, DD/MM/YYYY HH:mm");
         }
-            
+
         return {
             now: now,
             isAfterNow: isAfterNow,
@@ -168,12 +168,12 @@
     angular.module('newApp')
         .factory('calendarUtil', calendarUtil)
     ;
-    
-    calendarUtil.$inject = ['currentUser'];    
-    function calendarUtil(currentUser) {
+
+    calendarUtil.$inject = ['currentUser', '$rootScope'];
+    function calendarUtil(currentUser, $rootScope) {
         /**
          * Current time at default timezone
-         * 
+         *
          * @returns moment object
          */
         function setBookingClass(event) {
@@ -190,10 +190,31 @@
                 }
             }
         };
-        
-            
+
+        /**
+         * local_or_remote_actor_and_director
+         *
+         * @returns array
+         */
+        function getLocalOrRemoteActorAndDirectors() {
+            var localOrRemoteActorAndDirectorOptions = [
+                {title: 'Local Actor & Director', value: 'local_actor_director'},
+                {title: 'Local Actor with Remote Director', value: 'local_actor_with_remote_director'},
+                {title: 'Local Director with Remote Actor', value: 'local_director_with_remote_actor'}
+            ];
+            var settings = $rootScope.adminSettings.local_or_remote_actor_and_directors || {};
+            var availableOptions = [];
+            localOrRemoteActorAndDirectorOptions.forEach(function(item) {
+                if(settings.hasOwnProperty(item.value) && settings[item.value] == true)
+                    availableOptions.push(item);
+            });
+            return availableOptions;
+        };
+
+
         return {
-            setBookingClass: setBookingClass
+            setBookingClass: setBookingClass,
+            getLocalOrRemoteActorAndDirectors: getLocalOrRemoteActorAndDirectors
         };
     }
 
@@ -202,7 +223,7 @@
 
 (function () {
     angular.module('newApp').factory('RegExp', regExp);
-    
+
     function regExp() {
         return {
             validateEmail: function (email) {
@@ -215,7 +236,7 @@
 
 (function () {
     angular.module('newApp').factory('LaddaLoadingService', laddaLoadingService);
-    
+
     function laddaLoadingService() {
 
         function startLoadingButton (selector) {
@@ -240,7 +261,7 @@
 
 (function () {
     angular.module('newApp').factory('UserSettings', UserSettings);
-    
+
     UserSettings.$inject = ['$http', '$q', 'currentUser'];
 
     function UserSettings($http, $q, currentUser) {
@@ -363,7 +384,7 @@
                 profileLink.attr("href", userInfo.profileUrl);
                 profileLink.attr("target", "_blank");
                 profileLink.attr("title", htmlTitle);
-                
+
                 var profileImage = $("<img class='img-sm img-circle'>");
                 var profileImageUrl = "http://simpleicon.com/wp-content/uploads/user1.png"; // default avatar
                 if (userInfo.profilePhoto) {

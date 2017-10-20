@@ -118,7 +118,9 @@ function manageBookingCtrl ($scope, currentUser, $http, timeUtil, calendarUtil, 
                 new_spec.preferred_microphones_boom = past_spec.preferred_microphones_boom;
                 new_spec.lavalier = past_spec.lavalier;
                 new_spec.instructions = past_spec.instructions;
-                new_spec.local_or_remote_actor_and_director = 'local_actor_director';
+                if(calendarUtil.getLocalOrRemoteActorAndDirectors().length > 0) {
+                  new_spec.local_or_remote_actor_and_director = calendarUtil.getLocalOrRemoteActorAndDirectors()[0].value;
+                }
                 $scope.event_info.technical_specifications = new_spec;
             }
             manageActors();
