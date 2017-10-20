@@ -55,11 +55,13 @@
             <td><img ng-src="{{user.profilePhoto}}" class="img-circle" width="36" height="36" /></td>
             <td>{{user.fullname}}</td>
             <td>{{user.email}}</td>
-            <td class="text-uppercase">{{user.role}}</td>
+            <td class="text-uppercase">
+              <span editable-select="user.role" buttons="no" e-ng-options="role as role.toUpperCase() for role in ['admin', 'user']" onbeforesave="updateRole($index, $data)">{{user.role}}</span>
+            </td>
             <td>
               <label class="m-b-0">
                 <input ng-model="user.isAdrMixer"
-                       ng-change="updateUser($index)"
+                       ng-change="updateAdrMixer($index)"
                        icheck data-checkbox="icheckbox_square-blue"
                        value='{{user.isAdrMixer}}' type='checkbox' />
               </label>

@@ -36,9 +36,7 @@ angular.module('newApp')
       });
     };
 
-    $scope.updateUser = function(ind) {
-      var user = $scope.users[ind];
-      var user_params = { isAdrMixer: user.isAdrMixer };
+    $scope.updateUser = function(user, user_params) {
       $scope.isLoading = true;
       $http.put(TXP.serverUrl + 'users/' + user._id, user_params).then(function (successResponse) {
         $scope.isLoading = false;
@@ -99,6 +97,19 @@ angular.module('newApp')
 
     $scope.userLastSignInAt = function(date) {
       return !!date ? timeUtil.formatDateClient(date) : '';
+    };
+
+    $scope.updateAdrMixer = function(ind) {
+      var user = $scope.users[ind];
+      var user_params = { isAdrMixer: user.isAdrMixer };
+      $scope.updateUser(user, user_params)
+    };
+
+    $scope.updateRole = function(ind, role) {
+      var user = $scope.users[ind];
+      console.log(role, user.role);
+      var user_params = { role: role };
+      $scope.updateUser(user, user_params);
     };
 
 }]);

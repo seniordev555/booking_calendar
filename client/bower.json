@@ -34,7 +34,8 @@
     "noty": "^2.3.8",
     "animate.css": "^3.5.1",
     "fullcalendar-mobile": "^1.5.2",
-    "angular-flash-alert": "^2.4.0"
+    "angular-flash-alert": "^2.4.0",
+    "angular-xeditable": "^0.8.0"
   },
   "resolutions": {
     "jquery": "~2.1.4",

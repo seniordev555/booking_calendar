@@ -18,7 +18,8 @@ angular.module('newApp', [
     'ngTouch',
     'ui.bootstrap',
     'oc.lazyLoad',
-    'ngFlash'
+    'ngFlash',
+    'xeditable'
 ]);
 
 
@@ -47,12 +48,15 @@ angular.module('newApp').directive('ngSpinnerLoader', ['$rootScope',
     }
 ])
 
-angular.module("newApp").run(['$rootScope', '$state', '$stateParams', 'currentUser', '$http',
-    function ($rootScope, $state, $stateParams, currentUser, $http) {
+angular.module("newApp").run(['$rootScope', '$state', '$stateParams', 'currentUser', '$http', 'editableOptions', 'editableThemes',
+    function ($rootScope, $state, $stateParams, currentUser, $http, editableOptions, editableThemes) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope.serverUrl = TXP.serverUrl;
         $rootScope.adminSettings = {};
+        editableOptions.theme = 'bs3';
+        editableThemes.bs3.inputClass = 'input-sm';
+        editableThemes.bs3.buttonsClass = 'btn-sm';
 
         $http.get(TXP.serverUrl + 'settings').then(function(response) {
             if(response.data && response.data.data) {
