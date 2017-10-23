@@ -107,7 +107,6 @@ angular.module('newApp')
 
     $scope.updateRole = function(ind, role) {
       var user = $scope.users[ind];
-      console.log(role, user.role);
       var user_params = { role: role };
       $scope.updateUser(user, user_params);
     };
