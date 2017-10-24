@@ -1,5 +1,5 @@
 {
-    "db": "mongodb://localhost/booking-pro",
+    "db": "mongodb://localhost/booking_stage4_production",
     "baseUrl": "/booking/",
     "siteUrl": "https://hollywood.toddao.com/booking",
     "clientFolder": "../client/dist",
@@ -18,7 +18,7 @@
         "google": {
             "clientID": "1104794126-ut4pjk3nkmtth38lr17mpjgltcn78u1g.apps.googleusercontent.com",
             "clientSecret": "eHcfgqWagFsfw6zOnBjORvCW",
-            "callbackURL": "https://hollywood.toddao.com/booking/auth/google/callback"            
+            "callbackURL": "https://hollywood.toddao.com/booking/auth/google/callback"
         },
         "linkedin": {
             "clientID": "77bw7dcnsi8rfs",
@@ -31,7 +31,7 @@
         "service": "gmail",
         "host": "smtp.gmail.com",
         "port": 465,
-        "secure": true, // use SSL 
+        "secure": true, // use SSL
         "auth": {
             "user": "thirdstreetadr@gmail.com",
             "pass": "Th1rdS7re3t@D&-------"
