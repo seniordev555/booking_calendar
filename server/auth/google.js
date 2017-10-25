@@ -1,4 +1,4 @@
-/* 
+/*
  * Authentication with google
  */
 'use strict';
@@ -7,11 +7,11 @@ module.exports = function(app){
     var passport = require('passport')
         , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
     var config = require('config');
-    
+
     var authCommon = require('./common');
     var strategyOpts = config.get('auth.google');
     strategyOpts.passReqToCallback = true;
-    
+
     passport.use(new GoogleStrategy( strategyOpts,
         function (req, accessToken, refreshToken, profile, done) {
             var photo = null;
@@ -22,12 +22,12 @@ module.exports = function(app){
             if (profile.emails && profile.emails[0] && profile.emails[0].value) {
                 email = profile.emails[0].value;
             }
-            
+
             var profileUrl = null;
             if (profile._json && profile._json.url) {
                 profileUrl = profile._json.url;
             }
-            
+
             var data = {
                 'profileId': profile.id,
                 'displayName' : profile.displayName,
@@ -37,7 +37,7 @@ module.exports = function(app){
                 'profilePhoto': photo,
                 'email': email
             };
-            
+
             authCommon.authenticated(req, data, done);
         }
     ));
@@ -53,8 +53,8 @@ module.exports = function(app){
           // function will not be called.
         });
 
-    app.get('/auth/google/callback', 
-        passport.authenticate('google', { failureRedirect: '/login' }),
+    app.get('/auth/google/callback',
+        passport.authenticate('google', { failureRedirect: config.baseUrl }),
         function(req, res) {
             var redirectUrl = authCommon.getBookingRedirectUrl(req);
             res.redirect(redirectUrl);

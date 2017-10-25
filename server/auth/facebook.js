@@ -1,4 +1,4 @@
-/* 
+/*
  * Authentication with facebook
  */
 'use strict';
@@ -7,25 +7,25 @@ module.exports = function(app){
     var passport = require('passport')
         , FacebookStrategy = require('passport-facebook').Strategy;
     var config = require('config');
-    
+
     var authCommon = require('./common');
-    
+
     var strategyOpts = config.get('auth.facebook');
     strategyOpts.passReqToCallback = true;
-    
+
     passport.use(new FacebookStrategy(strategyOpts,
         function (req, accessToken, refreshToken, profile, done) {
-            
+
             var photo = null;
             if (profile.photos && profile.photos[0] && profile.photos[0].value) {
                 photo = profile.photos[0].value;
             }
-            
+
             var email = null;
             if (profile.emails && profile.emails[0] && profile.emails[0].value) {
                 email = profile.emails[0].value;
             }
-            
+
             var data = {
                 'profileId': profile.id,
                 'displayName' : profile.displayName,
@@ -36,7 +36,7 @@ module.exports = function(app){
                 'accessToken': accessToken,
                 'profilePhoto': photo
             };
-            
+
             authCommon.authenticated(req, data, done);
         }
     ));
@@ -60,7 +60,7 @@ module.exports = function(app){
     //   login page.  Otherwise, the primary route function function will be called,
     //   which, in this example, will redirect the user to the home page.
     app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', { failureRedirect: '/login' }),
+        passport.authenticate('facebook', { failureRedirect: config.baseUrl }),
         function(req, res) {
             var redirectUrl = authCommon.getBookingRedirectUrl(req);
             res.redirect(redirectUrl);
