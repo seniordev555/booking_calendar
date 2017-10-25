@@ -11,4 +11,4 @@ TXP.helpers.getTimezoneString = function () {
     return moment().tz(TXP.settings.timezone_string).format('Z');
 };
 
-TXP.serverUrl = "/booking/";
+TXP.serverUrl = "/vancouver/booking/";

@@ -1,10 +1,10 @@
 {
-    "db": "mongodb://localhost/booking-pro",
-    "baseUrl": "/booking/",
-    "siteUrl": "https://hollywood.toddao.com/booking",
+    "db": "mongodb://localhost/booking_vancouver_production",
+    "baseUrl": "/vancouver/booking/",
+    "siteUrl": "https://hollywood.toddao.com/vancouver/booking",
     "clientFolder": "../client/dist",
     "session": {
-        "secret": "SomeRandomString",
+        "secret": "H011yw00dV@nc0uv3rC@13nd@r",
         // minutes
         "lifetime": 120
     },
@@ -12,18 +12,18 @@
         "facebook": {
             "clientID": "1650786498516754",
             "clientSecret": "a2d28baa6df8011ee42bfda79a683663",
-            "callbackURL": "https://hollywood.toddao.com/booking/auth/facebook/callback",
+            "callbackURL": "https://hollywood.toddao.com/vancouver/booking/auth/facebook/callback",
             "profileFields": ["id", "displayName", "photos", "email"]
         },
         "google": {
             "clientID": "1104794126-ut4pjk3nkmtth38lr17mpjgltcn78u1g.apps.googleusercontent.com",
             "clientSecret": "eHcfgqWagFsfw6zOnBjORvCW",
-            "callbackURL": "https://hollywood.toddao.com/booking/auth/google/callback"            
+            "callbackURL": "https://hollywood.toddao.com/vancouver/booking/auth/google/callback"
         },
         "linkedin": {
             "clientID": "77bw7dcnsi8rfs",
             "clientSecret": "ZWYe6sLCPYHG9iQk",
-            "callbackURL": "https://hollywood.toddao.com/booking/auth/linkedin/callback",
+            "callbackURL": "https://hollywood.toddao.com/vancouver/booking/auth/linkedin/callback",
             "scope": ["r_basicprofile", "r_emailaddress"]
         }
     },
@@ -31,7 +31,7 @@
         "service": "gmail",
         "host": "smtp.gmail.com",
         "port": 465,
-        "secure": true, // use SSL 
+        "secure": true, // use SSL
         "auth": {
             "user": "thirdstreetadr@gmail.com",
             "pass": "Th1rdS7re3t@D&-------"
