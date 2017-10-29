@@ -29,7 +29,7 @@ authCommon.addUserToDb = function(profile, done) {
         if (err) {
             return done(err);
         }
-        var role = ['jacekmdev@gmail.com', 'robnokes@gmail.com'].includes(profile.email) ? 'admin' : 'user';
+        var role = ['jacekmdev@gmail.com', 'robnokes@gmail.com'].indexOf(profile.email) > -1 ? 'admin' : 'user';
         if (user) {
             user.set({
                 'profilePhoto': profile.profilePhoto,
