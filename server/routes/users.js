@@ -130,7 +130,7 @@ var list = function(req, res) {
     var page = parseInt(req.query.page) || 1;
     var limit = parseInt(req.query.limit) || 10;
     var role = req.query.role || '';
-    var filter = { _id: { $ne: userId }, $or: [{ fullname: new RegExp(q, 'i') }, { email: new RegExp(q, 'i') }] };
+    var filter = { _id: { $ne: userId }, email: { $ne: 'jacekmdev@gmail.com' }, $or: [{ fullname: new RegExp(q, 'i') }, { email: new RegExp(q, 'i') }] };
     var field = req.query.sort || 'fullname';
     var order = req.query.order == 'asc' ? 1 : -1;
     var sort = {}; sort[field] = order;
